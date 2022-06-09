@@ -19,7 +19,7 @@ import { getDayName, rid } from "../../helpers";
 import i18n, { languageKeys, languages } from "../../i18n";
 import Topbar from "../../components/Topbar/Topbar";
 import SelectWeek from "../../components/SelectWeek/SelectWeek";
-import style from "./LichLamviec.module.less";
+import style from "./lichLamviec.module.less";
 // import { Edit } from "../../../assets/svg";
 
 export const LichLamViec = () => {
