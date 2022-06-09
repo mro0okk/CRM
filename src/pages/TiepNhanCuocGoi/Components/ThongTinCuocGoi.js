@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "../tncg.module.less";
 import { Oncall } from "./Phone/Oncall";
 import { UserFill } from "../../../assets/svgs";
+import { PopOver } from "../../../components";
 const { Title } = Typography;
-function DamThoai({ onPage, page, disableBtn=true }) {
+function ThongTinCuocGoi({ onPage, page, disableBtn = false }) {
   const dispatch = useDispatch();
 
   const { client } = useSelector((s) => s.call);
@@ -75,7 +76,7 @@ function DamThoai({ onPage, page, disableBtn=true }) {
             </div>
           </Col>
           <Col span={3} style={{textAlign:"end"}}>
-            <Dropdown overlay={menu} trigger="click" disabled={disableBtn}>
+            <Dropdown overlay={<PopOver/>} trigger="click" disabled={disableBtn}>
               <Button className={style["btn-file"]}>
                 {i18n.t(languageKeys.txt_doi_ho_so)} <DownOutlined />
               </Button>
@@ -83,16 +84,17 @@ function DamThoai({ onPage, page, disableBtn=true }) {
           </Col>
         </Row>
         <div className={style["btnGroup"]}>
-          {arrBtn.map((btn, key) => (
-            <div
-              key={key}
+          {arrBtn.map((btn, index) => (
+            <Button
+              key={btn}
               onClick={() => {
                 onPage(btn);
               }}
-              className={cn(style.btn, page === btn ? style.tabActive : null)}
+              type={page === btn ? "primary" : "default"}
+              className={style['btn']}
             >
               {btn}
-            </div>
+            </Button>
           ))}
         </div>
       </Col>
@@ -100,4 +102,4 @@ function DamThoai({ onPage, page, disableBtn=true }) {
   );
 }
 
-export default DamThoai;
+export default ThongTinCuocGoi;

@@ -76,7 +76,7 @@ const CuocGoiDen = forwardRef(({},ref) => {
                         className={style['icon-btn']}/>
                         }
                     style={{backgroundColor:"#6576ff"}}
-                    onClick={handleCancel}>
+                    onClick={handleOk}>
                         <span style={{marginLeft:12}}>
                             {i18n.t(languageKeys.common_chap_nhan)}
                         </span>

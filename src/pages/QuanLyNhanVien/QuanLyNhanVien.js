@@ -6,6 +6,7 @@ import { CallQlbn } from "../../assets/svgs";
 import { Table, ThreeDot } from "../../components";
 import style from "./qlnv.module.less";
 import { DrawerQLNV } from "../../components/drawer/drawerQLNV";
+import { PlusOutlined } from "@ant-design/icons";
 
 export const QuanLyNhanVien = () => {
   const handleMenuClick = () => {};
@@ -187,7 +188,11 @@ export const QuanLyNhanVien = () => {
             />
           </div>
           <div className={style["BarSearch"]}>
-            <Button type="primary" onClick={showLargeDrawer}>
+            <Button
+            type="primary"
+            icon={<PlusOutlined/>}
+            onClick={showLargeDrawer}
+            >
               Thêm nhân sự
             </Button>
             <DrawerQLNV
