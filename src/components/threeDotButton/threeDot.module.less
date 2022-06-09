@@ -1,0 +1,43 @@
+.btn {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+}
+.icon {
+  filter: invert(65%) sepia(0%) saturate(0%) hue-rotate(5deg) brightness(100%)
+    contrast(97%);
+  position: relative;
+  top: 2px;
+  &:not(.disable):hover {
+    filter: unset;
+  }
+}
+.popOverContent {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+
+  div {
+    padding: 10px;
+    cursor: pointer;
+    span {
+      padding-right: 10px;
+    }
+  }
+}
+.popOverContent :hover {
+  background-color: #6576ff;
+  .icon {
+    filter: brightness(200%);
+  }
+  cursor: pointer;
+
+  color: white;
+}
+
+:global(.ant-popover-inner-content) {
+  padding: 0px;
+}

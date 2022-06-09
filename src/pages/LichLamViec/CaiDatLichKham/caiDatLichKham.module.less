@@ -1,0 +1,87 @@
+@import "../../../assets/styles/mixins.less";
+
+.wrapper {
+  padding: 15px 25px 0 25px;
+
+  h4 {
+    font-size: 18px;
+  }
+
+  &:last-child {
+    border: none;
+    padding-bottom: 15px;
+  }
+
+  .inner {
+    padding: 20px;
+    padding-bottom: 0;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+
+    &.top {
+      border-bottom-width: 0px;
+      border-radius: 10px 10px 0 0;
+      margin-bottom: 0;
+    }
+
+    &.bottom {
+      border-top-width: 0px;
+      border-radius: 0 0 10px 10px;
+    }
+
+    &.switches {
+      padding: 0;
+
+      .switch {
+        padding: 5px 20px;
+        border-top: 1px dashed #e1e1e1;
+
+        &.first {
+          border-right: 1px solid #e1e1e1;
+        }
+
+        &.last {
+          border-left: 1px solid #e1e1e1;
+        }
+      }
+    }
+  }
+
+  label {
+    color: @navy1;
+
+    &.label-custom {
+      margin-top: 4px;
+    }
+  }
+
+  :global(.ant-input-group-addon) {
+    background-color: #f5f7fb;
+    border-left: 1px solid #e4e6f8;
+    color: #aaafcf;
+  }
+}
+
+.default-min {
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  height: 32px;
+  padding-inline: 15px;
+  display: flex;
+  align-items: center;
+  color: @navy1;
+  margin-bottom: 24px;
+}
+
+.input-patient {
+  :global(.ant-input-number-prefix) {
+    border-right: 1px solid #e3e3e3 !important;
+    padding-right: 8px;
+    margin-right: 10px;
+  }
+}
+
+.navy-txt {
+  color: @navy1;
+  margin-bottom: 8px;
+}

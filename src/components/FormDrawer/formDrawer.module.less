@@ -1,0 +1,36 @@
+@import "../../assets/styles/mixins.less";
+
+.header {
+  padding: 10px 25px;
+  background-color: #f3f6f9;
+
+  svg {
+    color: #fff;
+  }
+
+  .icon {
+    font-size: 30px;
+    margin-top: 3px;
+
+    svg {
+      color: @blue1;
+    }
+  }
+}
+
+.container {
+  h4 {
+    font-weight: 600 !important;
+  }
+}
+
+.button {
+  min-width: 120px;
+}
+
+.button-row {
+  :global(.ant-btn-primary) {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -1,0 +1,126 @@
+:global(.ant-modal-mask) {
+  background-color: transparent !important;
+}
+
+.container {
+  max-width: 335px;
+  max-height: 650px;
+  padding: 0;
+
+  background-color: #fff;
+  border-radius: 32px;
+
+  overflow: hidden;
+  box-shadow: rgb(158, 158, 158) 0 0 10px 10px;
+
+  :global(.ant-modal-close) {
+    display: none;
+  }
+  :global(.ant-modal-content) {
+    height: 100%;
+  }
+  :global(.ant-modal-body) {
+    padding: 0.5rem;
+  }
+
+  .display {
+    min-height: 28vh;
+    display: flow-root;
+
+    padding-top: 4rem;
+    width: 100%;
+
+    overflow: hidden;
+    text-align: center;
+    justify-content: center;
+
+    .callout {
+      display: flex;
+      height: 500px;
+
+      .btnWrapper {
+        position: absolute;
+        width: 62px;
+        height: 62px;
+
+        bottom: 4rem;
+        border: none;
+        text-align: center;
+
+        .callAgain {
+          border: none;
+          background: #2cb2a5;
+          &:hover {
+            background: #2cb2a5db;
+          }
+        }
+
+        .danger {
+          border: none;
+          background: #f34946;
+          &:hover {
+            background: #f34946db;
+          }
+        }
+      }
+    }
+  }
+
+  .numPad {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 300px;
+    height: 355px;
+
+    margin: auto;
+
+    .num {
+      margin: auto;
+      padding: 1rem 2rem;
+
+      width: 5rem;
+      height: 4rem;
+
+      font-size: 22px !important;
+      border: none;
+    }
+  }
+  .action {
+    display: inline-flex;
+    margin-left: 50%;
+    transform: translateX(-25%);
+    .callBtn {
+      display: flex;
+      width: 50px;
+
+      background-color: hsl(174, 60%, 44%);
+      border-radius: 50%;
+    }
+    .delBtn {
+      background-color: #f34946;
+      color: red;
+    }
+    .icon {
+      color: white;
+      width: 100%;
+      height: 100%;
+      font-size: larger;
+      font-weight: bold;
+      transform: rotateY(180deg);
+      margin-left: 0.84rem;
+      margin-top: 0.1em;
+      text-align: center;
+    }
+  }
+}
+
+.btnTrigger {
+  position: fixed;
+  bottom: 50px;
+  right: 42px;
+  z-index: 50;
+  button > span > svg {
+    transform: scale(1.4);
+  }
+}

@@ -1,0 +1,21 @@
+@import "./vars.less";
+
+.txt-ellipsis(@row: 1) {
+  display: -webkit-box;
+  -webkit-line-clamp: @row;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.style-scroll-bar {
+  /* width */
+  &::-webkit-scrollbar {
+    width: 6px !important;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgb(186, 192, 198);
+    border-radius: 10px;
+  }
+}

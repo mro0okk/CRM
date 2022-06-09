@@ -1,0 +1,291 @@
+.firstContentBar {
+  margin: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  border-radius: 10px;
+}
+.secondContentBar,
+.thirdContentBar {
+  margin-left: 15px;
+  margin-right: 15px;
+  background: #ffffff;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+
+  margin-bottom: 15px;
+}
+.thongTinHanhChinhTitle,
+.lichSuTuVanTitle {
+  img {
+    margin-right: 10px;
+  }
+  font-size: 22px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 1px dashed #dddddd;
+  color: #2c3782;
+  font-weight: 600;
+}
+.thongTinHanhChinh,
+.lichSuTuVan {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  flex: 1;
+}
+.thongTinHanhChinh {
+}
+.lichSuTuVan {
+  position: relative;
+  overflow: auto;
+}
+.lichSuTuVanChild {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+.row-xyz {
+  display: flex;
+  gap: 0px;
+  padding: 15px;
+  flex-wrap: wrap;
+
+  .col1 {
+    width: 33.333%;
+    padding: 5px;
+    // flex-grow: 1
+
+    &.col-full {
+      width: 100%;
+    }
+  }
+}
+.infoName {
+  font-size: 20px;
+  color: #2c3782;
+  font-weight: 600;
+}
+.infoText {
+  color: #2c3782;
+  font-weight: 600;
+}
+.lichSuTuVanContent {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  gap: 20px;
+}
+.lichSuTuVanContent2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  min-height: 400px;
+}
+
+.lichSuTuVanPhone {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // margin: 0px 20px 0px 20px;
+
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+
+  padding: 10px;
+  div {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+.iconPhone {
+  font-size: 16px;
+  margin-right: 10px;
+  position: relative;
+  top: 5px;
+}
+.lichSuTuVanRightWrap {
+  display: flex;
+  div {
+    button {
+      cursor: pointer;
+    }
+  }
+}
+.lichSuTuVanRightWrap > div > button {
+  border: none;
+  background-color: rgb(249 249 249 / 0%);
+  // cursor: pointer;
+}
+.lichSuTuVanRightWrap > div {
+  padding-left: 40px;
+}
+.heavyBlue {
+  color: #2c3782;
+  font-weight: 600;
+}
+.secondContentBarLeftSide {
+  text-align: center;
+
+  button {
+    font-weight: 600;
+  }
+}
+.secondContentBarLeftSide {
+  // padding-top: 20px;
+  .btn {
+    border: none;
+    white-space: normal;
+    height: auto;
+    flex: 1;
+    padding: 10px;
+    font-weight: 600;
+  }
+  font-weight: 600;
+}
+.secondContentBarRightSideContent {
+  display: flex;
+  flex-direction: column;
+}
+.secondContentBarRightSideFlex {
+  display: table;
+  padding: 30px;
+
+  // flex-direction: row;
+  // padding: 30px;
+
+  .t-row {
+    display: table-row;
+
+    .t-col {
+      display: table-cell;
+      padding-bottom: 20px;
+
+      &.left {
+        white-space: nowrap;
+        padding-right: 10px;
+      }
+    }
+  }
+}
+.secondContentBarRightSideFlex2 {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  height: 100%;
+}
+.secondContentBarRightSideContent1 {
+  // width: 25%;
+  display: table-cell;
+  white-space: nowrap;
+  padding-right: 10px;
+}
+.secondContentBarRightSideContent2 {
+  // width: 75%;
+  display: table-cell;
+}
+.secondContentBarRightSideContent1 > div,
+.secondContentBarRightSideContent2 > div {
+  padding-bottom: 20px;
+  font-weight: 600;
+}
+.secondContentBarRightSideContent2 > div {
+  color: #2c3782;
+}
+.thirdContentBarFlexWrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.thirdContentBarTable {
+  padding: 20px;
+}
+
+.callingTitleRight {
+  font-size: 500;
+  font-size: 14px;
+  padding-top: 5px;
+}
+.callingTitle {
+  font-size: 20px;
+  font-weight: 600;
+}
+.blue {
+  color: #6576ff;
+  font-weight: 600;
+}
+.secondContentBarTitle,
+.thirdContentBarFlexWrap {
+  img {
+    margin-right: 10px;
+  }
+  padding-left: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 1px dashed #dddddd;
+  color: #2c3782;
+  font-weight: 600;
+  font-size: 22px;
+}
+.thirdContentBarSearch {
+  margin-bottom: 3px;
+}
+.thirdContentBarFlexWrap {
+  margin-right: 30px;
+}
+.secondContentBarRightSideTitle {
+  padding-left: 30px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 1px dashed #dddddd;
+  color: #2c3782;
+  font-weight: 600;
+  font-size: 18px;
+}
+// box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
+//
+.secondContentBarLeftSide,
+.secondContentBarRightSide {
+  display: flex;
+  flex-direction: column;
+
+  padding: 15px;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.07);
+  border-radius: 20px;
+}
+.secondContentBarRightSide {
+  flex-grow: 1;
+}
+.secondContentBarWrapInside {
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+}
+
+.secondContentBarLeftSide {
+  min-width: 250px;
+
+  .sidebar-tab {
+    padding: 5px 10px;
+    margin-bottom: 1px;
+    cursor: pointer;
+
+    &.active {
+      background: #6576ff;
+      color: white;
+    }
+  }
+}
+.thongTinHanhChinhForm {
+  padding: 15px;
+}
+.btnForm {
+  float: right;
+}

@@ -1,0 +1,10 @@
+// Variables
+@navy1: #2c3782;
+
+// Mixins
+.txt-ellipsis(@row: 1) {
+  display: -webkit-box;
+  -webkit-line-clamp: @row;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

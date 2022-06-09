@@ -1,0 +1,85 @@
+.popUp {
+  min-width: 400px;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 15px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+.greenFont {
+  color: #2cb2a5;
+}
+.popUpTitle {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 25px;
+  padding-bottom: 30px;
+}
+.popUpcontentWrap {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+
+  cursor: pointer;
+  img {
+    padding-right: 20px;
+    height: 50%;
+    width: 60px;
+  }
+}
+
+.popUpRightContent {
+  display: flex;
+  flex-direction: column;
+}
+.titleP {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+}
+.popUpRightContentNgaySinh {
+}
+.popUpRightContentGioiTinh {
+}
+.popUpRightContentGioiTinh,
+.popUpRightContentNgaySinh {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+}
+.popUpRightContentBelow {
+  padding-top: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+.popUpcontentWrap:hover {
+  background-color: #6576ff;
+  transition: 0.3s;
+  color: white;
+  .popUpRightContentGioiTinh,
+  .popUpRightContentNgaySinh,
+  .greenFont {
+    color: white;
+  }
+}
+.buttonPopOver {
+  padding-top: 30px;
+  div {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    /* identical to box height */
+
+    color: #6576ff;
+  }
+}
+.bonusIcon {
+  position: relative;
+  top: 6px;
+  cursor: pointer;
+}
