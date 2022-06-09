@@ -1,12 +1,10 @@
 import i18n, { languageKeys } from "../../../i18n";
 import style from "./chs.module.less";
 
-import React, { 
-  
-} from "react";
+import React from "react";
 
 import { CallingPhoneNavBar, MuteMic, Speaker } from "../../../assets/svgs";
-import { Modal} from "antd";
+import { Modal } from "antd";
 import { PopOver } from "../../../components";
 
 export const ChonHoSo = () => {
@@ -44,7 +42,7 @@ export const ChonHoSo = () => {
       </div>
       <div>
         <div className={style["dontDOit"]}>
-          <Modal visible={true} closable={false} footer={null}>
+          <Modal visible={true} closable={false} footer={null} width={680}>
             <PopOver />
           </Modal>
         </div>

@@ -1,3 +1,4 @@
+import Topbar from "../../components/Topbar/Topbar";
 import i18n, { languageKeys } from "../../i18n";
 
 import style from "./bdk.module.less";
@@ -149,9 +150,16 @@ export const BangDieuKhien = () => {
 
   return (
     <div className={style["container"]}>
-      <div className={style["title"]}>
-        <p>{i18n.t(languageKeys.trang_thai_nhan_vien)}</p>
-      </div>
+      <Topbar
+        className={style["topbar"]}
+        title={i18n.t(languageKeys.trang_thai_nhan_vien)}
+        // addBtnText={i18n.t(languageKeys.title_Tao_cuoc_hen)}
+        // onAdd={() => configRef.current.open(null, actionCuocHen.THEM_MOI)}
+        // searchString={searchString}
+        // setSearchString={setSearchString}
+        // onSearch={submitSearch}
+        showTotalNum={false}
+      />
 
       <div className={style["wrap"]}>
         {nhanVien.map((Staff) => (

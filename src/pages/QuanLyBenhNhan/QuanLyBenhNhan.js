@@ -1,8 +1,10 @@
 import { Button, Form } from "antd";
 import Search from "antd/lib/transfer/search";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CallQlbn } from "../../assets/svgs";
-import { Drawers, Table } from "../../components";
+import { DrawerQLBN } from "../../components";
+import Table from "../../components/TableCustom/Table";
+import Topbar from "../../components/Topbar/Topbar";
 import i18n, { languageKeys } from "../../i18n";
 import style from "./qlbn.module.less";
 
@@ -10,6 +12,10 @@ export const QuanLyBenhNhan = () => {
   const onSearch = (e) => {
     console.log(e);
   };
+  const submitSearch = () => {
+    // layDsCuocHenSapToi({ search_string: searchString });
+  };
+  const [searchString, setSearchString] = useState("");
   const dataSource = [
     {
       stt: "1",
@@ -95,7 +101,7 @@ export const QuanLyBenhNhan = () => {
       dataIndex: "sdt",
       key: "sdt",
       render: (text) => (
-        <div className={style["textCall"]}>
+        <div className="blue-txt">
           {" "}
           <CallQlbn /> {text}
         </div>
@@ -130,7 +136,7 @@ export const QuanLyBenhNhan = () => {
 
   return (
     <div className={style["container"]}>
-      <div className={style["topBar"]}>
+      {/* <div className={style["topBar"]}>
         <div className={style["title"]}>
           {i18n.t(languageKeys.menu_Quan_ly_benh_nhan)}
         </div>
@@ -147,19 +153,46 @@ export const QuanLyBenhNhan = () => {
             <Button type="primary" onClick={showLargeDrawer}>
               Thêm bệnh nhân
             </Button>
-            <Drawers
-              visible={visible}
-              onChange={onChange}
-              onClose={onClose}
-              onFinish={onFinish}
-              onSearch={onSearch}
-              form={form}
-            />
+            
           </div>
         </div>
-      </div>
+      </div> */}
+      <Topbar
+        className={style["topbar"]}
+        title={i18n.t(languageKeys.menu_Quan_ly_benh_nhan)}
+        addBtnText="Thêm bệnh nhân"
+        onAdd={showLargeDrawer}
+        searchString={searchString}
+        setSearchString={setSearchString}
+        onSearch={submitSearch}
+        showTotalNum={false}
+        // addOnActions={}
+      />
+      <DrawerQLBN
+        visible={visible}
+        onChange={onChange}
+        onClose={onClose}
+        onFinish={onFinish}
+        onSearch={onSearch}
+        form={form}
+      />
 
-      <Table columns={columns} dataSource={dataSource}></Table>
+      <Table
+        className={style["table"]}
+        showPagination={true}
+        columns={columns}
+        dataSource={dataSource}
+        // loading={loadingDsNcc}
+        // onSelectRows={(rows) => setSelectedRowKeys(rows)}
+        // selectedRows={selectedRowKeys}
+        // onClickRow={(data) => onOpenEdit(data)}
+        // totalResult={totalResult}
+        // currentPage={currentPage}
+        // limit={keys.limit}
+        scroll={{ y: "calc(100vh - 250px)" }}
+        // onNext={() => apiLayDsNcc({ page: currentPage + 1 })}
+        // onPrev={() => apiLayDsNcc({ page: currentPage - 1 })}
+      />
     </div>
   );
 };
