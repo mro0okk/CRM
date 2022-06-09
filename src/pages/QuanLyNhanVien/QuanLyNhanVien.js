@@ -182,38 +182,6 @@ export const QuanLyNhanVien = () => {
 
   return (
     <div className={style["container"]}>
-<<<<<<< HEAD
-      <div className={style["topBar"]}>
-        <div className={style["title"]}>Quản lý nhân sư</div>
-        <div className={style["rightSide"]}>
-          <div className={style["BarSearch"]}>
-            <Search
-              placeholder="input search text"
-              allowClear
-              onSearch={onSearch}
-              style={{ width: 200 }}
-            />
-          </div>
-          <div className={style["BarSearch"]}>
-            <Button
-            type="primary"
-            icon={<PlusOutlined/>}
-            onClick={showLargeDrawer}
-            >
-              Thêm nhân sự
-            </Button>
-            <DrawerQLNV
-              visible={visible}
-              onChange={onChange}
-              onClose={onClose}
-              onFinish={onFinish}
-              onSearch={onSearch}
-              form={form}
-            />
-          </div>
-        </div>
-      </div>
-=======
       <Topbar
         className={style["topbar"]}
         title={i18n.t(languageKeys.menu_Quan_ly_benh_nhan)}
@@ -233,7 +201,6 @@ export const QuanLyNhanVien = () => {
         onSearch={onSearch}
         form={form}
       />
->>>>>>> 45d20159296e6286ee332031e20465c1d90bc933
 
       <Table
         className={style["table"]}
