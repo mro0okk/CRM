@@ -3,17 +3,23 @@ import { Button, Form, Switch } from "antd";
 import Search from "antd/lib/transfer/search";
 import { useState } from "react";
 import { CallQlbn } from "../../assets/svgs";
-import { Table, ThreeDot } from "../../components";
+import { ThreeDot } from "../../components";
 import style from "./qlnv.module.less";
 import { DrawerQLNV } from "../../components/drawer/drawerQLNV";
+import Topbar from "../../components/Topbar/Topbar";
+import Table from "../../components/TableCustom/Table";
 
 export const QuanLyNhanVien = () => {
   const handleMenuClick = () => {};
   const [btnSwitch, setBtnSwitch] = useState(true);
   function onChangeSwitch(checked) {
     console.log(`switch to ${checked}`);
-    setBtnSwitch(checked);
+    // setBtnSwitch(checked);
   }
+  const submitSearch = () => {
+    // layDsCuocHenSapToi({ search_string: searchString });
+  };
+  const [searchString, setSearchString] = useState("");
 
   const onSearch = (e) => {
     console.log(e);
@@ -130,13 +136,13 @@ export const QuanLyNhanVien = () => {
       render: (text) => (
         <div>
           {btnSwitch ? (
-            <span className={style["textSwitchbtn"]}>
-              <a>{text}</a>
+            <span className="blue-txt">
+              {" "}
+              {text}
+              <span className={style["textSwitchbtn"]}></span>
             </span>
           ) : (
-            <span className={style["textSwitchbtn"]}>
-              <a>Tạm ngưng</a>
-            </span>
+            <span className={style["textSwitchbtn"]}>Tạm ngưng</span>
           )}
 
           <Switch defaultChecked onChange={onChangeSwitch} />
@@ -175,34 +181,42 @@ export const QuanLyNhanVien = () => {
 
   return (
     <div className={style["container"]}>
-      <div className={style["topBar"]}>
-        <div className={style["title"]}>Quản lý nhân sư</div>
-        <div className={style["rightSide"]}>
-          <div className={style["BarSearch"]}>
-            <Search
-              placeholder="input search text"
-              allowClear
-              onSearch={onSearch}
-              style={{ width: 200 }}
-            />
-          </div>
-          <div className={style["BarSearch"]}>
-            <Button type="primary" onClick={showLargeDrawer}>
-              Thêm nhân sự
-            </Button>
-            <DrawerQLNV
-              visible={visible}
-              onChange={onChange}
-              onClose={onClose}
-              onFinish={onFinish}
-              onSearch={onSearch}
-              form={form}
-            />
-          </div>
-        </div>
-      </div>
+      <Topbar
+        className={style["topbar"]}
+        title={i18n.t(languageKeys.menu_Quan_ly_benh_nhan)}
+        addBtnText="Thêm bệnh nhân"
+        onAdd={showLargeDrawer}
+        searchString={searchString}
+        setSearchString={setSearchString}
+        onSearch={submitSearch}
+        showTotalNum={false}
+        // addOnActions={}
+      />
+      <DrawerQLNV
+        visible={visible}
+        onChange={onChange}
+        onClose={onClose}
+        onFinish={onFinish}
+        onSearch={onSearch}
+        form={form}
+      />
 
-      <Table columns={columns} dataSource={dataSource}></Table>
+      <Table
+        className={style["table"]}
+        showPagination={true}
+        columns={columns}
+        dataSource={dataSource}
+        // loading={loadingDsNcc}
+        // onSelectRows={(rows) => setSelectedRowKeys(rows)}
+        // selectedRows={selectedRowKeys}
+        // onClickRow={(data) => onOpenEdit(data)}
+        // totalResult={totalResult}
+        // currentPage={currentPage}
+        // limit={keys.limit}
+        scroll={{ y: "calc(100vh - 250px)" }}
+        // onNext={() => apiLayDsNcc({ page: currentPage + 1 })}
+        // onPrev={() => apiLayDsNcc({ page: currentPage - 1 })}
+      />
     </div>
   );
 };

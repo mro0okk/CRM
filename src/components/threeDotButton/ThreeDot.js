@@ -1,5 +1,5 @@
 import { EllipsisOutlined } from "@ant-design/icons";
-import { Popover } from "antd";
+import { Button, Popover } from "antd";
 import React from "react";
 import { WhiteCalling, WhiteDocument, WhiteSpeaker } from "../../assets/svgs";
 import style from "./threeDot.module.less";
@@ -38,10 +38,11 @@ export const ThreeDot = (handleMenuClick) => {
         title="Thao tác"
         trigger="click"
       >
-        <button className={style["btn"]}>
-          {" "}
-          <EllipsisOutlined />{" "}
-        </button>{" "}
+        <Button
+          className={style["btn"]}
+          type="link"
+          icon={<EllipsisOutlined />}
+        ></Button>
       </Popover>
     </div>
   );

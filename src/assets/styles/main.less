@@ -1,9 +1,95 @@
-@import "./font.less";
-@import "./antd.less";
-
+@import "./fonts.less";
+@import "./vars.less";
+@import "~antd/dist/antd.less";
 // All style of tag will be written in here!
 
 * {
   font-family: "Quicksand";
   box-sizing: border-box;
+}
+@border-radius-base: 5px;
+@primary-color: @blue1;
+@switch-color: @blue2;
+@radio-dot-color: @blue2;
+@checkbox-color: @blue2;
+@select-item-selected-bg: @blue1;
+@select-item-selected-color: #ffffff;
+@input-color: @navy1;
+@input-bg: #f5f7fb;
+@input-placeholder-color: #aaafcf;
+@input-border-color: #f5f7fb;
+@select-background: #f5f7fb;
+@select-border-color: #f5f7fb;
+@heading-color: @navy1;
+@label-color: @navy1;
+// @icon-color: #999999;
+@select-selection-item-bg: @blue2;
+@table-header-bg: #fff;
+@table-header-color: @navy1;
+@table-row-hover-bg: @navy1;
+@table-bg: transparent;
+@table-selected-row-bg: #fff;
+@table-selected-row-hover-bg: @navy1;
+@layout-body-background: #f5f7fb;
+@layout-header-background: #fff;
+@layout-sider-background: @navy1;
+@layout-header-padding: 0px;
+@layout-header-height: @header-height;
+@modal-body-padding: 24px 0px;
+@drawer-header-padding: 0px;
+@drawer-body-padding: 0px;
+@menu-dark-bg: @layout-sider-background;
+@menu-dark-item-active-bg: @blue1;
+@menu-item-active-border-width: 0px;
+@menu-dark-inline-submenu-bg: @navy1;
+@menu-popup-bg: @navy1;
+* {
+  font-family: "Quicksand" !important;
+  box-sizing: border-box;
+  // font-weight: 500 !important;
+}
+h2,
+h3,
+h5,
+h6,
+p,
+div,
+a,
+span {
+  margin-bottom: 0;
+  font-size: 13px;
+}
+h1 {
+  font-size: 22px;
+}
+h2 {
+  font-size: 20px;
+}
+h3 {
+  font-size: 18px;
+}
+h4 {
+  font-size: 16px;
+}
+label {
+  font-weight: 700 !important;
+}
+
+.green-txt {
+  color: @green1;
+}
+.blue-txt {
+  color: @blue1;
+}
+.navy-txt {
+  color: @navy1;
+}
+.orange-txt {
+  color: @orange1;
+}
+.red-txt {
+  color: @red1;
+}
+.bold-txt {
+  font-weight: bold !important;
 }
