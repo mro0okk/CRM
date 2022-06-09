@@ -4,7 +4,7 @@ export * from "./Login/Login";
 export * from "./QuanLyBenhNhan/QuanLyBenhNhan";
 export * from "./TiepNhanCuocGoi/TiepNhanCuocGoi";
 export * from "./LichSuCuocGoi/LichSuCuocGoi";
-export * from "./lichLamViec/LichLamViec";
+export * from "./LichLamViec/LichLamViec";
 export * from "./bangDieuKhien/BangDieuKhien";
 export * from "./QuanLyNhanVien/QuanLyNhanVien";
 export * from "./thongKe/ThongKe";
