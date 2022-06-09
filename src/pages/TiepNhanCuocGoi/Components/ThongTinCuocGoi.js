@@ -8,6 +8,7 @@ import style from "../tncg.module.less";
 import { Oncall } from "./Phone/Oncall";
 import { UserFill } from "../../../assets/svgs";
 import { PopOver } from "../../../components";
+import { rid } from "../../../helpers";
 const { Title } = Typography;
 function ThongTinCuocGoi({ onPage, page, disableBtn = false }) {
   const dispatch = useDispatch();
@@ -83,10 +84,10 @@ function ThongTinCuocGoi({ onPage, page, disableBtn = false }) {
             </Dropdown>
           </Col>
         </Row>
-        <div className={style["btnGroup"]}>
+        <div className={style["buttonWrap"]}>
           {arrBtn.map((btn, index) => (
             <Button
-              key={btn}
+              key={rid()}
               onClick={() => {
                 onPage(btn);
               }}
