@@ -1,5 +1,5 @@
 import i18n, { languageKeys } from "../../../i18n";
-import style from "./tncg.module.less";
+import style from "../tncg.module.less";
 
 import React, { useState } from "react";
 import { Button, Dropdown, Image } from "antd";

@@ -11,10 +11,10 @@ function Avalaible() {
             <img src={PicInTiepNhan} alt="" />
           </div>
           <div className={style["noCallDivTextwrap"]}>
-            <div className={style["noCallDivTitle"]}>CRM - Call Center</div>
-            <div className={style["noCallDivText"]}>
-              Bạn chưa có cuộc gọi nào đang diễn ra. Vui lòng thực hiện cuộc
-              gọi!
+            <div className={`${style["noCallDivTitle"]} navy-txt`}>CRM - Call Center</div>
+            <div className="navy-txt">
+              {i18n.t(languageKeys.txt_chua_co_cuoc_goi)}.<br/>
+               {i18n.t(languageKeys.txt_thuc_hien_cuoc_goi)}!
             </div>
           </div>
         </div>
