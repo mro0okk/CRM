@@ -14,11 +14,11 @@ import {
   LichLamViec,
 } from "../pages";
 import usePhone from "../pages/TiepNhanCuocGoi/hooks/usePhone";
-import InviteCall from "../pages/TiepNhanCuocGoi/Components/Phone/inviteCall";
 import { useSelector } from "react-redux";
 import { phoneStatus } from "../constants/phoneStatus";
 import { ThongKe } from "../pages/thongKe/ThongKe";
 import HoSoChuaCoTrongHeThong from "../pages/TiepNhanCuocGoi/hoSoChuaCoTrongHeThong/hoSoChuaCoTrongHeThong";
+import { CuocGoiDen } from "../pages/TiepNhanCuocGoi/Components";
 
 export const MainRoutes = () => {
   const [siderCollapsed, setSiderCollapsed] = useState(false);
@@ -40,7 +40,7 @@ export const MainRoutes = () => {
   const { status } = useSelector((state) => state.call);
   return (
     <>
-      {status === phoneStatus.invite && <InviteCall />}
+      {status === phoneStatus.invite && <CuocGoiDen />}
       {status === phoneStatus.on_call && (
         <Redirect to={paths.tiep_nhan_cuoc_goi} />
       )}

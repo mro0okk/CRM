@@ -6,6 +6,7 @@ const initState = {
   phoneNumber: "",
   client: {},
   reasonCall: "",
+  duration:"0:00",
 };
 const callSlice = createSlice({
   name: "call",
@@ -20,12 +21,12 @@ const callSlice = createSlice({
     addPhone: (state, { payload }) => {},
     makeCall: (state, action) => {
       HLog(action.payload);
-      window.omiSDK.makeCall(action.payload);
+      // window.omiSDK.makeCall(action.payload);
       state.status = phoneStatus.connecting;
     },
     acceptCall: (state, action) => {
       HLog(action.payload);
-      window.omiSDK.acceptCall();
+      // window.omiSDK.acceptCall();
       state.status = phoneStatus.on_call;
     },
     onCall: (state, { payload }) => {
@@ -34,7 +35,12 @@ const callSlice = createSlice({
     },
     durationing: (state, { payload }) => {
       console.log("duration: ", payload);
+      state.duration = payload
     },
+    rejectCall: (state,action) => {
+      HLog("PHoneStatus::::",phoneStatus.rejected)
+      state.status = phoneStatus.rejected
+    }
   },
 });
 

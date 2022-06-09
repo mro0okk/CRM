@@ -19,10 +19,10 @@ function Goidi() {
   const [mute, setMute] = useState(false);
   const handleMuteCall = () => {
     setMute(!mute);
-    window.omiSDK.toggleMute(!mute);
+    // window.omiSDK.toggleMute(!mute);
   };
   const handleCancelCall = () => {
-    window.omiSDK.stopCall();
+    // window.omiSDK.stopCall();
     dispatch(changeStatus(phoneStatus.end_call));
   };
   const handleCall = (callee) => {

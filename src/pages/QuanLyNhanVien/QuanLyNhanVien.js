@@ -6,6 +6,7 @@ import { CallQlbn } from "../../assets/svgs";
 import { ThreeDot } from "../../components";
 import style from "./qlnv.module.less";
 import { DrawerQLNV } from "../../components/drawer/drawerQLNV";
+import { PlusOutlined } from "@ant-design/icons";
 import Topbar from "../../components/Topbar/Topbar";
 import Table from "../../components/TableCustom/Table";
 

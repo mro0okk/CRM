@@ -42,54 +42,48 @@ const CuocGoiDen = forwardRef(({}, ref) => {
     },
   }));
 
-  return (
-    <Modal
-      className={style["toastCall"]}
-      bodyStyle={styleCuocGoi}
-      footer={false}
-      centered
-      visible={isModalVisible}
-      onOk={() => setIsModalVisible(false)}
-      onCancel={() => setIsModalVisible(false)}
-    >
-      <div className={cn(style.lineCall)}>
-        <h2 style={{ color: "white" }}>
-          {i18n.t(languageKeys.title_cuoc_goi_den)}
-        </h2>
-      </div>
-      <div className={cn(style.lineCall)}>
-        <Avatar
-          style={{ backgroundColor: "white" }}
-          size="large"
-          icon={<UserFill style={{ marginTop: 4 }} />}
-        />
-        <span className={style["line_call--sdt"]}>
-          {formatPhoneNumber(currentNumber)}
-        </span>
-      </div>
-      <div className={cn(style.lineCall)}>
-        <Button
-          className={style["btn-modal"]}
-          type="primary"
-          ghost
-          onClick={handleCancel}
-        >
-          {i18n.t(languageKeys.common_tư_choi)}
-        </Button>
-        <Button
-          className={style["btn-modal"]}
-          type="primary"
-          icon={<PhoneAlt className={style["icon-btn"]} />}
-          style={{ backgroundColor: "#6576ff" }}
-          onClick={handleCancel}
-        >
-          <span style={{ marginLeft: 12 }}>
-            {i18n.t(languageKeys.common_chap_nhan)}
-          </span>
-        </Button>
-      </div>
-    </Modal>
-  );
-});
+    return (
+            <Modal
+                className={style['toastCall']}
+                bodyStyle={styleCuocGoi}
+                footer={false}
+                centered
+                visible={isModalVisible}
+                onOk={() => setIsModalVisible(false)}
+                onCancel={() => setIsModalVisible(false)}
+            >
+                <div className={cn(style.lineCall)}>
+                    <h2 style={{color:"white"}}>{i18n.t(languageKeys.title_cuoc_goi_den)}</h2>
+                </div>
+                <div className={cn(style.lineCall)}>
+                    <Avatar
+                        style={{backgroundColor:"white"}}
+                        size="large"
+                        icon={<UserFill style={{marginTop:4}} />}
+                    />
+                    <span className={style['line_call--sdt']}>{formatPhoneNumber(currentNumber)}</span>
+                </div>
+                <div className={cn(style.lineCall)}>
+                <Button
+                    className={style['btn-modal']}
+                    type="primary"
+                    ghost
+                    onClick={handleCancel}>{i18n.t(languageKeys.common_tư_choi)}</Button>
+                <Button
+                    className={style['btn-modal']}
+                    type="primary"
+                    icon={<PhoneAlt 
+                        className={style['icon-btn']}/>
+                        }
+                    style={{backgroundColor:"#6576ff"}}
+                    onClick={handleOk}>
+                        <span style={{marginLeft:12}}>
+                            {i18n.t(languageKeys.common_chap_nhan)}
+                        </span>
+                </Button>
+                </div>
+            </Modal>
+    )
+})
 
 export default CuocGoiDen;

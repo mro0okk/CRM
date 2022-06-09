@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, Input, Select, Table, Form } from "antd";
 import Search from "antd/lib/transfer/search";
 import React, { useState } from "react";
 import style from "./ttbn.module.less";
@@ -12,51 +12,13 @@ import {
   LichSuKhamBenhIcon,
   lichSuTuVanIcon,
 } from "../../../assets/imgs";
+import { callHistory, fieldThongTinBenhNhan, hoSoSucKhoeTabs } from "./fieldThongTin";
 
-export const ThongTinBenhNhan = () => {
-  const hoSoSucKhoeTabs = [
-    "Tình trạng lúc sinh",
-    "Yếu tố nguy cơ",
-    "Tiền sử bệnh tật",
-    "Khuyết tật",
-    "Tiền sử phẫu thuật",
-    "Tiền sử gia đình",
-    "Sức khỏe sinh sản",
-    "Vấn đề khác",
-  ];
-  const callHistory = [
-    {
-      status: "hangUp",
-      date: " 22/02/2000",
-      duration: "04:55 s",
-    },
+const { Item } = Form;
 
-    {
-      status: "hangUp",
-      date: " 22/02/2000",
-      duration: "04:55 s",
-    },
-    {
-      status: "calling",
-      date: " 22/02/2000",
-      duration: "04:55 s",
-    },
-    {
-      status: "called",
-      date: " 22/02/2000",
-      duration: "04:55 s",
-    },
-    {
-      status: "called",
-      date: "22/02/2000",
-      duration: "04:55 s",
-    },
-    {
-      status: "hangUp",
-      date: " 22/02/2000",
-      duration: "04:55 s",
-    },
-  ];
+export const ThongTinBenhNhan = ({ editable = false }) => {
+
+
   const columns = [
     {
       title: "Ngày khám bệnh",
@@ -120,63 +82,127 @@ export const ThongTinBenhNhan = () => {
         <div className={style["thongTinHanhChinh"]}>
           <div className={style["thongTinHanhChinhTitle"]}>
             <img src={Iconsth} alt="" />
-            {i18n.t(languageKeys.thong_tin_tai_chinh)}
+            {i18n.t(languageKeys.field_Thong_tin_hanh_chinh)}
           </div>
           <div className={style["row-xyz"]}>
-            <div className={style["col1"]}>
+            <Item name={fieldThongTinBenhNhan.HO_TEN} className={style["col1"]}>
               <div>Họ và tên</div>
-              <div className={style["infoName"]}>Bessie Cooper</div>
-            </div>
-            <div className={style["col1"]}>
+              <div className={style["infoName"]}>
+                <Input
+                  readOnly={!editable}
+                  bordered={!editable}
+                  placeholder={i18n.t(languageKeys.common_Nhap)}
+                />
+              </div>
+            </Item>
+            <Item
+              name={fieldThongTinBenhNhan.NGAY_SINH}
+              className={style["col1"]}
+            >
               <div>Ngày sinh</div>
-              <div className={style["infoText"]}>22/02/2000</div>
-            </div>
-            <div className={style["col1"]}>
+              <div className={style["infoText"]}>
+                <Input
+                  readOnly={!editable}
+                  bordered={!editable}
+                  placeholder={i18n.t(languageKeys.common_Nhap)}
+                />
+              </div>
+            </Item>
+            <Item
+              name={fieldThongTinBenhNhan.GIOI_TINH}
+              className={style["col1"]}
+            >
               <div>Giới tính</div>
-              <div className={style["infoText"]}>Nam</div>
-            </div>
-            <div className={style["col1"]}>
+              <Select placeholder={i18n.t(languageKeys.common_Chon)} />
+            </Item>
+            <Item name={fieldThongTinBenhNhan.CMND} className={style["col1"]}>
               <div>CMND/CCCD</div>
-              <div className={style["infoText"]}>32504070683500</div>
-            </div>
-            <div className={style["col1"]}>
+              <div className={style["infoText"]}>
+                <Input
+                  readOnly={!editable}
+                  bordered={!editable}
+                  placeholder={i18n.t(languageKeys.common_Nhap)}
+                />
+              </div>
+            </Item>
+            <Item name={fieldThongTinBenhNhan.SO_DT} className={style["col1"]}>
               <div>Số điện thoại</div>
-              <div className={style["infoText"]}>0983 899 990</div>
-            </div>
-            <div className={style["col1"]}>
+              <div className={style["infoText"]}>
+                <Input
+                  readOnly={!editable}
+                  bordered={!editable}
+                  placeholder={i18n.t(languageKeys.common_Nhap)}
+                />
+              </div>
+            </Item>
+            <Item name={fieldThongTinBenhNhan.EMAIL} className={style["col1"]}>
               <div>Email</div>
-              <div className={style["infoText"]}>bessiecooper@gmail.com</div>
-            </div>
-            <div className={style["col1"]}>
+              <div className={style["infoText"]}>
+                <Input
+                  readOnly={!editable}
+                  bordered={!editable}
+                  placeholder={i18n.t(languageKeys.common_Nhap)}
+                />
+              </div>
+            </Item>
+            <Item name={fieldThongTinBenhNhan.TINH} className={style["col1"]}>
               <div>Tỉnh/thành phố</div>
               <div className={style["infoText"]}>Hà nội</div>
-            </div>
-            <div className={style["col1"]}>
+            </Item>
+            <Item
+              name={fieldThongTinBenhNhan.QUAN_HUYEN}
+              className={style["col1"]}
+            >
               <div>Quận/huyện</div>
               <div className={style["infoText"]}>Thanh Xuân</div>
-            </div>
-            <div className={style["col1"]}>
+            </Item>
+            <Item
+              name={fieldThongTinBenhNhan.XA_PHUONG}
+              className={style["col1"]}
+            >
               <div>Xã/phường</div>
               <div className={style["infoText"]}>Thanh Xuân Trung</div>
-            </div>
-            <div className={cn(style["col1"], style["col-full"])}>
+            </Item>
+            <Item
+              name={fieldThongTinBenhNhan.DIA_CHI}
+              className={cn(style["col1"], style["col-full"])}
+            >
               <div>Địa chỉ chi tiết</div>
               <div className={style["infoText"]}>
-                Lô 22, số 35 Lê Văn Thiêm, Thanh Xuân Trung, Thanh Xuân, Hà Nội{" "}
+                <Input
+                  readOnly={!editable}
+                  bordered={!editable}
+                  placeholder={i18n.t(languageKeys.common_Nhap)}
+                />{" "}
               </div>
-            </div>
-            <div className={style["col1"]}>
+            </Item>
+            <Item
+              name={fieldThongTinBenhNhan.NGHE_NGHIEP}
+              className={style["col1"]}
+            >
               <div>Nghề nghiệp</div>
-              <div className={style["infoText"]}>Sinh viên</div>
-            </div>
-            <div className={style["col1"]}>
+              <div className={style["infoText"]}>
+                <Select placeholder={i18n.t(languageKeys.common_Chon)} />
+              </div>
+            </Item>
+            <Item
+              name={fieldThongTinBenhNhan.DAN_TOC}
+              className={style["col1"]}
+            >
               <div>Dân tộc</div>
-              <div className={style["infoText"]}>Kinh</div>
-            </div>
-            <div className={style["col1"]}>
+              <div className={style["infoText"]}>
+                <Select placeholder={i18n.t(languageKeys.common_Chon)} />
+              </div>
+            </Item>
+            <Item
+              name={fieldThongTinBenhNhan.QUOC_GIA}
+              className={style["col1"]}
+            >
               <div>Quốc gia</div>
-              <div className={style["infoText"]}>Việt Nam</div>
-            </div>
+              <div className={style["infoText"]}>
+                <Select placeholder={i18n.t(languageKeys.common_Chon)} />
+              </div>
+            </Item>
           </div>
         </div>
         <div className={style["lichSuTuVan"]}>

@@ -157,7 +157,7 @@
 
   .btn {
     border: none;
-    white-space: normal;
+
     height: auto;
     flex: 1;
     padding: 10px;
@@ -411,26 +411,16 @@
 
 .btnGroup {
   display: flex;
-  margin-top: 24px;
-  align-self: flex-end;
-  justify-content: space-between;
+  flex-direction: row;
+  padding-top: 40px;
+  gap: 10px;
   .btn {
-    font-size: 14px;
+    border: none;
 
-    padding: 16px;
-
+    height: auto;
+    flex: 1;
+    padding: 10px;
     font-weight: 600;
-    color: @navy1;
-    background-color: @white;
-
-    border-radius: 8px;
-    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-
-    &.tabActive {
-      color: @white;
-      background-color: @royalBlue;
-    }
   }
 }
 .btn-file {
