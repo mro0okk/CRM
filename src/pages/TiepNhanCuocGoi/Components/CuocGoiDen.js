@@ -4,43 +4,43 @@ import { useDispatch } from "react-redux";
 import cn from "classnames";
 import { acceptCall, rejectCall } from "../../../ducks/slices/callSlice";
 import i18n, { languageKeys } from "../../../i18n";
-import style from "../tncg.module.less"
+import style from "../tncg.module.less";
 import { PhoneAlt, UserFill } from "../../../assets/svgs";
 import { formatPhoneNumber } from "../../../helpers";
 
-    const styleCuocGoi = {
-        backgroundColor:"#2c3782",
-        borderRadius:10,
-        width:500,
-        padding:0,
-    }
+const styleCuocGoi = {
+  backgroundColor: "#2c3782",
+  borderRadius: 10,
+  width: 500,
+  padding: 0,
+};
 
-const CuocGoiDen = forwardRef(({},ref) => {
-    const [isModalVisible, setIsModalVisible] = useState(true);
-    const [currentNumber, setCurrentNumber] = useState("0338305136");
-    const dispatch = useDispatch()
+const CuocGoiDen = forwardRef(({}, ref) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentNumber, setCurrentNumber] = useState("0338305136");
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        return () => {
-            setCurrentNumber("")
-        }
-    },[])
-
-    const handleOk = () => {
-        setIsModalVisible(false);
-        dispatch(acceptCall())
+  useEffect(() => {
+    return () => {
+      setCurrentNumber("");
     };
+  }, []);
 
-    const handleCancel = () => {
-        dispatch(rejectCall())
-        setIsModalVisible(false);
-    };
+  const handleOk = () => {
+    setIsModalVisible(false);
+    dispatch(acceptCall());
+  };
 
-    useImperativeHandle(ref,() => ({
-        open: (phoneNumber) => {
-            setCurrentNumber(phoneNumber.toString())
-        }
-    }))
+  const handleCancel = () => {
+    dispatch(rejectCall());
+    setIsModalVisible(false);
+  };
+
+  useImperativeHandle(ref, () => ({
+    open: (phoneNumber) => {
+      setCurrentNumber(phoneNumber.toString());
+    },
+  }));
 
     return (
             <Modal

@@ -1,7 +1,18 @@
+@import "../../assets/styles/mixins.less";
+
 .btn {
-  border: none;
-  background-color: white;
-  cursor: pointer;
+  
+  transition: all 0.2s ease-in-out;
+  height: 25px !important;
+  // width: 30px!important;
+
+  &:hover {
+    background-color: #d4d8f4 !important;
+
+    * {
+      color: @navy1 !important;
+    }
+  }
 }
 .icon {
   filter: invert(65%) sepia(0%) saturate(0%) hue-rotate(5deg) brightness(100%)
