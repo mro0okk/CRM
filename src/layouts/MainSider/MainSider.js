@@ -7,8 +7,6 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CallPicIcon, SideBarIcon } from "../../assets/imgs";
 
-const SIDER_WIDTH = 300;
-
 export const MainSider = ({ collapsed = false }) => {
   const { pathname } = useLocation();
   const history = useHistory();
@@ -60,7 +58,7 @@ export const MainSider = ({ collapsed = false }) => {
     <Layout.Sider
       theme="light"
       mode="inline"
-      width={SIDER_WIDTH}
+      width={300}
       collapsed={collapsed}
       className={style["container"]}
     >

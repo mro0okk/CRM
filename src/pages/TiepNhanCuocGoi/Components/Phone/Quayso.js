@@ -2,14 +2,14 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Button, Input, Typography } from "antd";
 import { useDispatch } from "react-redux";
 import cn from "classnames";
-import { PhoneOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PhoneOutlined } from "@ant-design/icons";
 import { makeCall } from "../../../../ducks/slices/callSlice";
 import phoneStyle from "./PhoneModal.module.less";
-import { formatPhoneNumber } from "../../../../helpers";
+import { formatPhoneNumber, HLog } from "../../../../helpers";
 const { Title, Text } = Typography;
 
 function Quayso() {
-  const [display, setDisplay] = useState("");
+  const [displayNumber, setDisplayNumber] = useState("");
   const keypadKeys = [
     "1",
     "2",
@@ -25,34 +25,29 @@ function Quayso() {
     "#",
   ];
   const dispatch = useDispatch();
-  const handleCall = () => {
-    dispatch(makeCall(display));
+  const handleCall = (phoneNumber) => {
+    HLog("PHONE_NUMBER",phoneNumber)
+    dispatch(makeCall(phoneNumber));
   };
   const handleClickNum = (e) => {
     const number = e.target.outerText;
-    setDisplay(display.concat(number));
+    setDisplayNumber(displayNumber.concat(number));
   };
   const handleDel = () => {
-    setDisplay(display.slice(0, display.length - 1));
+    setDisplayNumber(displayNumber.slice(0, displayNumber.length - 1));
   };
   const handleChangeNumber = (number) => {
-    setDisplay(number);
+    setDisplayNumber(number);
   };
   return (
     <>
       <div className={phoneStyle.display}>
         <Input
-          value={display}
+          value={displayNumber}
           onChange={(e) => handleChangeNumber(e.target.value)}
-          style={{
-            outline: "none",
-            border: "none",
-            width: "100%",
-            fontSize: "2.5rem",
-            textAlign:'center',
-          }}
-          onPressEnter={() => {}}
-        />
+          className={phoneStyle['call-input']}
+          onPressEnter={(e) => handleCall(e.target.value)}
+          />
       </div>
       <div className={phoneStyle['numPad']}>
         {keypadKeys.map((key) => {
@@ -66,21 +61,23 @@ function Quayso() {
             </Button>
           );
         })}
+      </div>
         <div className={phoneStyle['action']}>
           <Button
-            onClick={handleCall}
-            className={cn(phoneStyle.num, phoneStyle["callBtn"])}
+            onClick={()=>handleCall(displayNumber)}
+            className={phoneStyle["callBtn"]}
+            shape="circle"
           >
-            <PhoneOutlined className={phoneStyle.icon} />
+            <PhoneOutlined className={phoneStyle['icon']} />
           </Button>
           <Button
             onClick={handleDel}
-            className={cn(phoneStyle.num, phoneStyle["btnDel"])}
+            ghost
+            icon={<DeleteOutlined/>}
+            className={cn(phoneStyle.num, phoneStyle["delBtn"])}
           >
-            del
           </Button>
         </div>
-      </div>
     </>
   );
 }

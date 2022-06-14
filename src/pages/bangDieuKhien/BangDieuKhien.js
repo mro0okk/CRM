@@ -1,4 +1,5 @@
 import Topbar from "../../components/Topbar/Topbar";
+import { rid } from "../../helpers";
 import i18n, { languageKeys } from "../../i18n";
 
 import style from "./bdk.module.less";
@@ -162,16 +163,18 @@ export const BangDieuKhien = () => {
       />
 
       <div className={style["wrap"]}>
-        {nhanVien.map((Staff) => (
-          <div className={style["contentWrap"]}>
-            {Staff.status === "Đang online" ? (
-              <div className={style["status1"]}>{Staff.status}</div>
+        {nhanVien.map((staff) => (
+          <div 
+            key={rid()}
+          className={style["contentWrap"]}>
+            {staff.status === "Đang online" ? (
+              <div className={style["status1"]}>{staff.status}</div>
             ) : (
-              <div className={style["status2"]}>{Staff.status}</div>
+              <div className={style["status2"]}>{staff.status}</div>
             )}
 
-            <div className={style["name"]}>{Staff.name}</div>
-            <div className={style["email"]}>{Staff.email}</div>
+            <div className={style["name"]}>{staff.name}</div>
+            <div className={style["email"]}>{staff.email}</div>
           </div>
         ))}
       </div>

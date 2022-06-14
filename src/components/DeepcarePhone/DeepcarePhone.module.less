@@ -1,0 +1,93 @@
+.container{
+    width: 19vw;
+    height: 70vh;
+
+    .display{
+        height: calc(40vh - (3vh * 4) + 50px);
+        padding: 24px 12px;
+        text-align: center;
+
+        .text-zone{
+            margin-top: 12px;
+        }
+    }
+    .keypad{
+        min-height: 25vh;
+    }
+    .btn-wrapper{
+        position: relative;
+        text-align: center;
+        margin-top: 6px;
+    }
+}
+
+.btn-call{
+    width: 3vw;
+    height: 6vh;
+    background-color: hsl(174, 60%, 44%);
+    border: none;
+    .icon-call{
+        transform: scale(1.8);
+        svg{
+            transform: rotate(90deg);
+        }
+    }
+    margin-left: 16px;
+}
+
+.btn-del{
+    height: 48px;
+    border: none;
+    transform: translateX(50px);
+}
+
+.call-input{
+    background-color: #fff;
+    border: none;
+    margin-top: 12px;
+
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.numpad{
+    display: flex;
+    flex-wrap: wrap;
+
+    margin-left: 10px;
+}
+
+.num{
+    width: 30%;
+    height: 3vw;
+    
+    margin: 2px;
+    border: none;
+}
+.calling{
+    display: flex;
+    justify-content:space-between;
+    padding: 0 32px;
+}
+
+.btn-size{
+    height: 3vw;
+    width: 3vw;
+    border: none;
+}
+
+.danger-btn{
+    &:extend(.btn-size);
+    background-color: #F34946;
+}
+
+.icon-phone{
+    transform: scale(1.6) !important;
+}
+
+.call-hangout{
+    svg{
+    transform: rotate(225deg) !important;
+    }
+}

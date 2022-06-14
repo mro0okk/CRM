@@ -1,7 +1,44 @@
+@import "../../assets/styles/mixins.less";
+
 .container {
   position: sticky;
   top: 0;
   background-color: #fff;
   border-bottom: 1px solid #d3d3d3;
   z-index: 100;
+}
+.btn-toggle{
+  width: 54px;
+  height: 54px;
+  border: none;
+  border-radius: 0;
+  border-right: 1px solid #ccc;
+  :global(.ant-btn){
+    &:hover{
+      color:#e2e2e2;
+      border-color: #e2e2e2;
+    }
+  }
+}
+.coming-call{
+  min-width: 250px;
+  color: #fff;
+  height: 99%;
+  cursor: pointer;
+
+  border-radius: 10px;
+  animation: fadeInLeft ease 3s infinite;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
 }

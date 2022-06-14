@@ -1,12 +1,25 @@
-import { Layout, Button, Row, Col } from "antd";
+import { useEffect, useRef } from "react";
+import { Layout, Button, Row, Col, Space } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import style from "./mainHeader.module.less";
 import i18n, { languageKeys, languages } from "../../i18n";
+import { phoneStatus } from "../../constants/phoneStatus";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { paths } from "../../constants";
+import { CuocGoiDen } from "../../pages/TiepNhanCuocGoi/Components";
+import { formatPhoneNumber, HLog } from "../../helpers";
 
 export const MainHeader = ({
   siderCollapsed = false,
-  toggleSider = () => { },
+  toggleSider = () => {},
 }) => {
+  const callRef = useRef();
+  const { status, phoneNumber, client } = useSelector((state) => state.call);
+
+  const toggleCuocGoi = () => {
+    callRef.current.open();
+  };
   const langItems = [
     {
       key: "vi",
@@ -26,7 +39,7 @@ export const MainHeader = ({
     i18n.changeLanguage(val);
     window.location.reload();
   };
-
+  HLog("wSDK", status, phoneNumber, client);
   return (
     <Layout.Header className={style["container"]}>
       <Row align="middle" justify="space-between">
@@ -36,8 +49,19 @@ export const MainHeader = ({
             icon={
               siderCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />
             }
+            className={style["btn-toggle"]}
           ></Button>
         </Col>
+
+        {status === phoneStatus.on_call && (
+          <Redirect to={paths.tiep_nhan_cuoc_goi} />
+        )}
+        {status === phoneStatus.invite && (
+          <Space onClick={toggleCuocGoi} className={style["coming-call"]}>
+            <span style={{ color: "navy" }}>{formatPhoneNumber(phoneNumber)}</span>
+            <span style={{ color: "navy" }}>{client?.remoteName}</span>
+          </Space>
+        )}
 
         <Col>
           <Row align="middle" gutter={10}>
@@ -54,6 +78,8 @@ export const MainHeader = ({
           </Row>
         </Col>
       </Row>
+
+      <CuocGoiDen ref={callRef} />
     </Layout.Header>
   );
 };

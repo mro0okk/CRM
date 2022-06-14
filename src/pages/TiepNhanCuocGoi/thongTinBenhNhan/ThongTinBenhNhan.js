@@ -1,9 +1,10 @@
 import { Button, Input, Select, Table, Form } from "antd";
 import Search from "antd/lib/transfer/search";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import style from "./ttbn.module.less";
 import { Called, CallingPhone, HangUpPhone } from "../../../assets/svgs";
 import cn from "classnames";
+import moment from "moment";
 import { ThreeDot } from "../../../components/threeDotButton/ThreeDot";
 import i18n, { languageKeys } from "../../../i18n";
 import {
@@ -12,69 +13,56 @@ import {
   LichSuKhamBenhIcon,
   lichSuTuVanIcon,
 } from "../../../assets/imgs";
-import { callHistory, fieldThongTinBenhNhan, hoSoSucKhoeTabs } from "./fieldThongTin";
+import {
+  callHistory,
+  fieldThongTinBenhNhan,
+  hoSoSucKhoeTabs,
+} from "./fieldThongTin";
+import { common_post, HLog, rid } from "../../../helpers";
+import { useSelector } from "react-redux";
+import { throttle } from "lodash";
+import apis from "../../../constants/apis";
 
 const { Item } = Form;
 
-export const ThongTinBenhNhan = ({ editable = false }) => {
-
-
-  const columns = [
-    {
-      title: "Ngày khám bệnh",
-      dataIndex: "date",
-      key: "date",
-    },
-    {
-      title: "Bệnh viện khám",
-      dataIndex: "hospital",
-      key: "hospital",
-    },
-    {
-      title: "Phòng thực hiện",
-      dataIndex: "department",
-      key: "department",
-    },
-    {
-      title: "Bác sĩ",
-      key: "doctor",
-      dataIndex: "doctor",
-    },
-    {
-      title: "Chẩn đoán bệnh chính",
-      key: "diagnose",
-      dataIndex: "diagnose",
-    },
-  ];
-
-  const data = [
-    {
-      key: "1",
-      date: "02/03/2021",
-      hospital: "Bệnh viện Hữu Nghị",
-      department: "Phòng nội tổng hợp",
-      doctor: ["Jacob, Jones"],
-      diagnose: "Viêm đại tràng mãn tính",
-    },
-    {
-      key: "2",
-      date: "02/03/2021",
-      hospital: "Bệnh viện Hữu Nghị",
-      department: "Phòng nội tổng hợp",
-      doctor: ["Jacob, Jones"],
-      diagnose: "Viêm đại tràng mãn tính",
-    },
-    {
-      key: "3",
-      date: "02/03/2021",
-      hospital: "Bệnh viện Hữu Nghị",
-      department: "Phòng nội tổng hợp",
-      doctor: ["Jacob, Jones"],
-      diagnose: "Viêm đại tràng mãn tính",
-    },
-  ];
+export const ThongTinBenhNhan = ({ editable = false, form }) => {
   const [currentTab, setCurrentTab] = useState(hoSoSucKhoeTabs[0]);
-  const onSearch = (value) => console.log(value);
+  const [dataSource, setDataSource] = useState(data);
+  const [searchString, setSearchString] = useState("");
+  const userProfile = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    return () => {
+     form.resetFields()
+     setSearchString("")
+     setDataSource([])
+    }
+  },[])
+
+  const handleGetDataSource = async (search_string = "", BENH_NHAN_ID) => {
+    setSearchString(search_string);
+    let body = {
+      partner_code: userProfile.partner_code,
+      BENH_VIEN_ID: userProfile.BENH_VIEN_ID,
+      BENH_NHAN_ID: BENH_NHAN_ID,
+      search_string,
+    };
+    try {
+      let response = await common_post(apis, body, false);
+      if (response && response.status === "OK") {
+        // setDataSource(response)
+      }
+    } catch (error) {
+      HLog("Lỗi lấy danh sách lịch sử khám bệnh::", error);
+    }
+  };
+
+  const onSearch = useCallback(
+    throttle((search_string) => {
+      handleGetDataSource(search_string);
+    }, 1000),
+    []
+  );
 
   return (
     <div className={style["navBarContent"]}>
@@ -85,8 +73,16 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
             {i18n.t(languageKeys.field_Thong_tin_hanh_chinh)}
           </div>
           <div className={style["row-xyz"]}>
-            <Item name={fieldThongTinBenhNhan.HO_TEN} className={style["col1"]}>
-              <div>Họ và tên</div>
+            <Item
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+              name={fieldThongTinBenhNhan.HO_TEN}
+              className={style["col1"]}
+            >
+              <div>{i18n.t(languageKeys.ho_va_ten)}:</div>
               <div className={style["infoName"]}>
                 <Input
                   readOnly={!editable}
@@ -99,7 +95,7 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
               name={fieldThongTinBenhNhan.NGAY_SINH}
               className={style["col1"]}
             >
-              <div>Ngày sinh</div>
+              <div>{i18n.t(languageKeys.field_Ngay_sinh)}:</div>
               <div className={style["infoText"]}>
                 <Input
                   readOnly={!editable}
@@ -112,11 +108,11 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
               name={fieldThongTinBenhNhan.GIOI_TINH}
               className={style["col1"]}
             >
-              <div>Giới tính</div>
+              <div>{i18n.t(languageKeys.field_Gioi_tinh)}:</div>
               <Select placeholder={i18n.t(languageKeys.common_Chon)} />
             </Item>
             <Item name={fieldThongTinBenhNhan.CMND} className={style["col1"]}>
-              <div>CMND/CCCD</div>
+              <div>{i18n.t(languageKeys.field_CMND_CCCD)}:</div>
               <div className={style["infoText"]}>
                 <Input
                   readOnly={!editable}
@@ -126,7 +122,7 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
               </div>
             </Item>
             <Item name={fieldThongTinBenhNhan.SO_DT} className={style["col1"]}>
-              <div>Số điện thoại</div>
+              <div>{i18n.t(languageKeys.field_So_dien_thoai)}:</div>
               <div className={style["infoText"]}>
                 <Input
                   readOnly={!editable}
@@ -136,7 +132,7 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
               </div>
             </Item>
             <Item name={fieldThongTinBenhNhan.EMAIL} className={style["col1"]}>
-              <div>Email</div>
+              <div>{i18n.t(languageKeys.field_Email)}:</div>
               <div className={style["infoText"]}>
                 <Input
                   readOnly={!editable}
@@ -146,28 +142,28 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
               </div>
             </Item>
             <Item name={fieldThongTinBenhNhan.TINH} className={style["col1"]}>
-              <div>Tỉnh/thành phố</div>
-              <div className={style["infoText"]}>Hà nội</div>
+              <div>{i18n.t(languageKeys.field_Tinh_thanh)}:</div>
+              <Select placeholder={i18n.t(languageKeys.common_Chon)} />
             </Item>
             <Item
               name={fieldThongTinBenhNhan.QUAN_HUYEN}
               className={style["col1"]}
             >
-              <div>Quận/huyện</div>
-              <div className={style["infoText"]}>Thanh Xuân</div>
+              <div>{i18n.t(languageKeys.field_Quan_huyen)}:</div>
+              <Select placeholder={i18n.t(languageKeys.common_Chon)} />
             </Item>
             <Item
               name={fieldThongTinBenhNhan.XA_PHUONG}
               className={style["col1"]}
             >
-              <div>Xã/phường</div>
-              <div className={style["infoText"]}>Thanh Xuân Trung</div>
+              <div>{i18n.t(languageKeys.field_Xa_phuong)}:</div>
+              <Select placeholder={i18n.t(languageKeys.common_Chon)} />
             </Item>
             <Item
               name={fieldThongTinBenhNhan.DIA_CHI}
               className={cn(style["col1"], style["col-full"])}
             >
-              <div>Địa chỉ chi tiết</div>
+              <div>{i18n.t(languageKeys.field_Dia_chi_chi_tiet)}</div>
               <div className={style["infoText"]}>
                 <Input
                   readOnly={!editable}
@@ -180,7 +176,7 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
               name={fieldThongTinBenhNhan.NGHE_NGHIEP}
               className={style["col1"]}
             >
-              <div>Nghề nghiệp</div>
+              <div>{i18n.t(languageKeys.field_Nghe_nghiep)}:</div>
               <div className={style["infoText"]}>
                 <Select placeholder={i18n.t(languageKeys.common_Chon)} />
               </div>
@@ -189,7 +185,7 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
               name={fieldThongTinBenhNhan.DAN_TOC}
               className={style["col1"]}
             >
-              <div>Dân tộc</div>
+              <div>{i18n.t(languageKeys.field_Dan_toc)}:</div>
               <div className={style["infoText"]}>
                 <Select placeholder={i18n.t(languageKeys.common_Chon)} />
               </div>
@@ -198,7 +194,7 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
               name={fieldThongTinBenhNhan.QUOC_GIA}
               className={style["col1"]}
             >
-              <div>Quốc gia</div>
+              <div>{i18n.t(languageKeys.field_Quoc_gia)}:</div>
               <div className={style["infoText"]}>
                 <Select placeholder={i18n.t(languageKeys.common_Chon)} />
               </div>
@@ -213,7 +209,7 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
             </div>
             <div className={style["lichSuTuVanContent"]}>
               {callHistory.map((content) => (
-                <div className={style["lichSuTuVanPhone"]}>
+                <div key={rid()} className={style["lichSuTuVanPhone"]}>
                   <div>
                     {content.status === "called" ? (
                       <Called className={style["iconPhone"]} />
@@ -248,7 +244,7 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
       <div className={style["secondContentBar"]}>
         <div className={style["secondContentBarTitle"]}>
           <img src={HoSoKhamBenhIcon} alt="" />
-          Hồ sơ sức khỏe
+          {i18n.t(languageKeys.txt_ho_so_suc_khoe)}
         </div>
 
         <div className={style["secondContentBarWrapInside"]}>
@@ -272,27 +268,27 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
             <div className={style["secondContentBarRightSideFlex"]}>
               <div className={style["t-row"]}>
                 <div className={cn(style["t-col"], style["left"])}>
-                  Hình thức đẻ:
+                  {i18n.t(languageKeys.txt_hinh_thuc_de)}:
                 </div>
                 <div className={style["t-col"]}>Đẻ thường</div>
               </div>
 
               <div className={style["t-row"]}>
                 <div className={cn(style["t-col"], style["left"])}>
-                  Cân nặng lúc đẻ:
+                  {i18n.t(languageKeys.txt_hinh_thuc_de)}:
                 </div>
                 <div className={style["t-col"]}>3,5 kg</div>
               </div>
 
               <div className={style["t-row"]}>
                 <div className={cn(style["t-col"], style["left"])}>
-                  Chiều dài lúc đẻ:
+                  {i18n.t(languageKeys.txt_chieu_dai_luc_de)}:
                 </div>
                 <div className={style["t-col"]}>50 cm</div>
               </div>
               <div className={style["t-row"]}>
                 <div className={cn(style["t-col"], style["left"])}>
-                  Vấn đề khác:
+                  {i18n.t(languageKeys.txt_van_de_khac)}:
                 </div>
                 <div className={style["t-col"]}>
                   Neque porro quisquam est qui dolorem ipsum quia dolor sit
@@ -308,7 +304,7 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
         <div className={style["thirdContentBarFlexWrap"]}>
           <div>
             <img src={LichSuKhamBenhIcon} alt="" />
-            Lịch sử khám bệnh
+            {i18n.t(languageKeys.Lich_su_kham_benh)}:
           </div>
           <div>
             <Search
@@ -321,9 +317,70 @@ export const ThongTinBenhNhan = ({ editable = false }) => {
           </div>
         </div>
         <div className={style["thirdContentBarTable"]}>
-          <Table columns={columns} dataSource={data} pagination={false} />
+          <Table columns={columns} dataSource={dataSource} pagination={false} />
         </div>
       </div>
     </div>
   );
 };
+
+const columns = [
+  {
+    title: i18n.t(languageKeys.field_Ngay_kham),
+    dataIndex: "date",
+    key: "date",
+    render: (record) => {
+      return <span>{moment(record.NGAY).format("DD/MM/YYYY")}</span>;
+    },
+  },
+  {
+    title: i18n.t(languageKeys.field_benh_vien_kham),
+    dataIndex: "hospital",
+    key: "hospital",
+  },
+  {
+    title: i18n.t(languageKeys.field_Phong_thuc_hien),
+    dataIndex: "department",
+    key: "department",
+  },
+  {
+    title: i18n.t(languageKeys.field_Bac_si),
+    key: "doctor",
+    dataIndex: "doctor",
+    render: (record) => {
+      return <span>{record?.doctor}</span>;
+    },
+  },
+  {
+    title: i18n.t(languageKeys.field_chuan_doan_benh_chinh),
+    key: "diagnose",
+    dataIndex: "diagnose",
+  },
+];
+
+const data = [
+  {
+    key: "1",
+    date: "02/03/2021",
+    hospital: "Bệnh viện Hữu Nghị",
+    department: "Phòng nội tổng hợp",
+    doctor: ["Jacob, Jones"],
+    diagnose: "Viêm đại tràng mãn tính",
+  },
+  {
+    key: "2",
+    date: "02/03/2021",
+    hospital: "Bệnh viện Hữu Nghị",
+    department: "Phòng nội tổng hợp",
+    doctor: ["Jacob, Jones"],
+    diagnose: "Viêm đại tràng mãn tính",
+  },
+  {
+    key: "3",
+    date: "02/03/2021",
+    hospital: "Bệnh viện Hữu Nghị",
+    department: "Phòng nội tổng hợp",
+    doctor: ["Jacob, Jones"],
+    diagnose: "Viêm đại tràng mãn tính",
+  },
+];

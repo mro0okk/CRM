@@ -7,55 +7,57 @@ import {
 } from "@ant-design/icons";
 import phoneStyle from "./PhoneModal.module.less";
 import { useDispatch, useSelector } from "react-redux";
-import { changeStatus, makeCall } from "../../../../ducks/slices/callSlice";
+import { changeStatus, makeCall, resetState } from "../../../../ducks/slices/callSlice";
 import { phoneStatus } from "../../../../constants/phoneStatus";
-import { formatPhoneNumber } from "../../../../helpers";
+import { formatPhoneNumber, HLog } from "../../../../helpers";
 import i18n, { languageKeys } from "../../../../i18n";
 const { Text, Title } = Typography;
 function Goidi() {
-  const [callee, setCallee] = useState("0338305136");
   const dispatch = useDispatch();
-  const { reasonCall, status } = useSelector((s) => s.call);
+  const { reasonCall, status,phoneNumber,callee } = useSelector((s) => s.call);
   const [mute, setMute] = useState(false);
   const handleMuteCall = () => {
     setMute(!mute);
-    // window.omiSDK.toggleMute(!mute);
+    window.omiSDK.toggleMute(!mute);
   };
   const handleCancelCall = () => {
-    // window.omiSDK.stopCall();
+    window.omiSDK.stopCall();
     dispatch(changeStatus(phoneStatus.end_call));
+    dispatch(resetState())
   };
-  const handleCall = (callee) => {
+  const handleCall = () => {
+    HLog("GOI_NHES")
     dispatch(makeCall(callee));
   };
   const handleCancel = () => {
-    dispatch(changeStatus(phoneStatus.available));
+    dispatch(resetState())
   };
+
   const OnCall = () => {
     return (
-      <div className={phoneStyle['callout']}>
-        <div className={phoneStyle['btnWrapper']} style={{ left: "2rem" }}>
+      <>
+        <div className={phoneStyle["btnWrapper"]}
+        >
           <Button
             type="primary"
             ghost
-            style={{ width: "62px", height: "62px" }}
+            className={`${phoneStyle["btn-calling"]} ${phoneStyle["call-btn"]}`}
             shape="circle"
-            icon={<AudioMutedOutlined style={{ fontSize: "1.6rem" }} />}
+            icon={<AudioMutedOutlined/>}
             size="large"
             onClick={handleMuteCall}
           />
           <Text>{i18n.t(languageKeys.common_tat_tieng)}</Text>
         </div>
 
-        <div className={phoneStyle['btnWrapper']} style={{ right: "2rem" }}>
+        <div className={phoneStyle["btnWrapper"]}>
           <Button
             type="primary"
-            className={phoneStyle.danger}
-            style={{ width: "62px", height: "62px" }}
+            className={`${phoneStyle.danger} ${phoneStyle["call-btn"]}`}
             shape="circle"
             icon={
               <PhoneOutlined
-                style={{ transform: " rotate(227deg)", fontSize: "1.6rem" }}
+                className={phoneStyle["icon-callout"]}
               />
             }
             size="large"
@@ -63,51 +65,43 @@ function Goidi() {
           />
           <Text>{i18n.t(languageKeys.common_ket_thuc)}</Text>
         </div>
-      </div>
+      </>
     );
   };
   const Onended = () => {
     return (
-      <div className={phoneStyle['callout']}>
-        <div className={phoneStyle['btnWrapper']} style={{ left: "2rem" }}>
+      <>
+        <div className={phoneStyle["btnWrapper"]}>
           <Button
             type="primary"
             ghost
-            style={{
-              width: "62px",
-              height: "62px",
-              color: "white",
-              background: "#f34946",
-              border: "none",
-            }}
+            className={`${phoneStyle["btn-calling"]} ${phoneStyle["call-btn"]}`}
             shape="circle"
-            icon={<CloseOutlined style={{ fontSize: "1.6rem" }} />}
+            icon={<CloseOutlined/>}
             size="large"
             onClick={handleCancel}
           />
-          <Text>Hủy</Text>
+          <Text>{i18n.t(languageKeys.common_Huy)}</Text>
         </div>
 
-        <div className={phoneStyle['btnWrapper']} style={{ right: "2rem" }}>
+        <div className={phoneStyle["btnWrapper"]}>
           <Button
             type="primary"
-            className={phoneStyle['callAgain']}
-            style={{ width: "62px", height: "62px" }}
+            className={phoneStyle["callAgain"]}
             shape="circle"
             icon={
               <PhoneOutlined
-                style={{ transform: " rotate(227deg)", fontSize: "1.6rem" }}
+              className={phoneStyle['icon-callout']}
               />
             }
             onClick={() => handleCall(callee)}
             size="large"
           />
-          <Text>Gọi lại</Text>
+          <Text>{i18n.t(languageKeys.common_goi_lai)}</Text>
         </div>
-      </div>
+      </>
     );
   };
-
   return (
     <>
       <div className={phoneStyle.display}>
@@ -115,13 +109,14 @@ function Goidi() {
         <h3 style={{ margin: 0 }}>
           {status === phoneStatus.end_call && reasonCall}
         </h3>
-        <div>
+      </div>
+      <div className={phoneStyle['numPad']}></div>
+        <div className={phoneStyle['callout']}>
           {(status === phoneStatus.ringing ||
             status === phoneStatus.connecting ||
             status === phoneStatus.on_call) && <OnCall />}
           {status === phoneStatus.end_call && <Onended />}
         </div>
-      </div>
     </>
   );
 }
