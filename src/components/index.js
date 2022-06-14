@@ -1,6 +1,5 @@
 export * from "./textBox/TextBox";
-export * from "./popOverHoSoBenhNhan/PopOver";
-export * from "./table/table";
+export * from "./popOverHoSoBenhNhan/ChonHoSo";
 export * from "./TableCustom/Table";
 export * from "./threeDotButton/ThreeDot";
 export * from "./drawer/drawersQLBN.js";

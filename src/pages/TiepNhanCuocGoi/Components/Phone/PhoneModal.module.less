@@ -3,8 +3,8 @@
 }
 
 .container {
-  max-width: 335px;
-  max-height: 650px;
+  width: fit-content !important;   
+  height: fit-content;
   padding: 0;
 
   background-color: #fff;
@@ -24,7 +24,7 @@
   }
 
   .display {
-    min-height: 28vh;
+    min-height: 25vh;
     display: flow-root;
 
     padding-top: 4rem;
@@ -33,35 +33,50 @@
     overflow: hidden;
     text-align: center;
     justify-content: center;
+  }
+  .callout {
+    display: flex;
+  }
 
-    .callout {
-      display: flex;
-      height: 500px;
+  .btnWrapper {
+    position: relative;
+    border: none;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 
-      .btnWrapper {
-        position: absolute;
-        width: 62px;
-        height: 62px;
+    .btn-calling {
+      color: #fff;
+      background-color: #f34946;
+      border: none;
+    }
 
-        bottom: 4rem;
-        border: none;
-        text-align: center;
+    .call-btn {
+      width: 62px;
+      height: 62px;
+    }
 
-        .callAgain {
-          border: none;
-          background: #2cb2a5;
-          &:hover {
-            background: #2cb2a5db;
-          }
-        }
+    .icon-callout {
+      font-size: 1.6rem;
+      svg {
+        transform: rotate(227deg);
+      }
+    }
 
-        .danger {
-          border: none;
-          background: #f34946;
-          &:hover {
-            background: #f34946db;
-          }
-        }
+    .callAgain {
+      border: none;
+      background: #2cb2a5;
+      &:hover {
+        background: #2cb2a5db;
+      }
+    }
+
+    .danger {
+      border: none;
+      background: #f34946;
+      &:hover {
+        background: #f34946db;
       }
     }
   }
@@ -86,32 +101,28 @@
       border: none;
     }
   }
-  .action {
-    display: inline-flex;
-    margin-left: 50%;
-    transform: translateX(-25%);
-    .callBtn {
-      display: flex;
-      width: 50px;
+}
 
-      background-color: hsl(174, 60%, 44%);
-      border-radius: 50%;
-    }
-    .delBtn {
-      background-color: #f34946;
-      color: red;
-    }
-    .icon {
-      color: white;
-      width: 100%;
-      height: 100%;
-      font-size: larger;
-      font-weight: bold;
-      transform: rotateY(180deg);
-      margin-left: 0.84rem;
-      margin-top: 0.1em;
-      text-align: center;
-    }
+.action {
+  display: inline-flex;
+  margin-left: 50%;
+  transform: translateX(-25%);
+  
+
+  .delBtn {
+    margin-left: 24px;
+    margin-top: 12px;
+    color: black;
+  }
+  .icon {
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    line-height: 55px;
+    font-size: 24px;
+    font-weight: bold;
+    transform: rotateY(180deg);
+    text-align: center;
   }
 }
 
@@ -124,3 +135,91 @@
     transform: scale(1.4);
   }
 }
+
+.btn-call {
+  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+
+  .ringing {
+    background-color: rebeccapurple;
+    animation: ringing 1.2s infinite ease-in-out;
+  }
+  .icon-call {
+    color: #fff !important;
+    font-size: larger !important;
+    transform: scale(1.2) !important;
+    svg {
+      transform: rotate(90deg) !important;
+    }
+  }
+}
+
+.call-input {
+  outline: none;
+  border: none;
+  width: 100%;
+  font-size: 2.5rem;
+  text-align: center;
+  background-color: #fff;
+}
+
+// @-moz-keyframes coccoc-alo-circle-anim {
+//   0% {
+//       transform: rotate(0) scale(.5) skew(1deg);
+//       opacity: .1
+//   }
+//   30% {
+//       transform: rotate(0) scale(.7) skew(1deg);
+//       opacity: .5
+//   }
+//   100% {
+//       transform: rotate(0) scale(1) skew(1deg);
+//       opacity: .1
+//   }
+// }
+
+// @-webkit-keyframes coccoc-alo-circle-anim {
+//   0% {
+//       transform: rotate(0) scale(.5) skew(1deg);
+//       opacity: .1
+//   }
+//   30% {
+//       transform: rotate(0) scale(.7) skew(1deg);
+//       opacity: .5
+//   }
+//   100% {
+//       transform: rotate(0) scale(1) skew(1deg);
+//       opacity: .1
+//   }
+// }
+
+// @-o-keyframes coccoc-alo-circle-anim {
+//   0% {
+//       transform: rotate(0) scale(.5) skew(1deg);
+//       opacity: .1
+//   }
+//   30% {
+//       transform: rotate(0) scale(.7) skew(1deg);
+//       opacity: .5
+//   }
+//   100% {
+//       transform: rotate(0) scale(1) skew(1deg);
+//       opacity: .1
+//   }
+// }
+
+// @keyframes ringing {
+//   0% {
+//     transform: rotate(0) scale(0.7) skew(1deg);
+//     opacity: 0.2;
+//   }
+//   50% {
+//     transform: rotate(0) scale(1) skew(1deg);
+//     opacity: 0.2;
+//   }
+//   100% {
+//     transform: rotate(0) scale(0.7) skew(1deg);
+//     opacity: 0.2;
+//   }
+// }

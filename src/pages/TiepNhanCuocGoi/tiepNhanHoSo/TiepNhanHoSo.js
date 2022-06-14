@@ -10,8 +10,8 @@ import { DownOutlined } from "@ant-design/icons";
 import { Avatars } from "../../../assets/imgs";
 import { ThongTinBenhNhan } from "../thongTinBenhNhan";
 import { GhiChu } from "../ghiChu/GhiChu";
-import { PopOver } from "../../../components";
 import DatLichKham from "../datLichKham/datLichKham";
+import { ChonHoSo } from "../../../components/popOverHoSoBenhNhan/ChonHoSo";
 
 export const TiepNhanHoSo = () => {
   const navBarMenu = [
@@ -22,7 +22,7 @@ export const TiepNhanHoSo = () => {
     "Kê đơn và đặt mua thuốc",
   ];
 
-  const menu = <PopOver />;
+  const menu = <ChonHoSo />;
   const [currentMenu, setCurrentMenu] = useState(navBarMenu[0]);
   return (
     <div className={style["container"]}>

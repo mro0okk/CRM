@@ -31,7 +31,10 @@ const en = {
   common_tat_tieng:"Mute",
   common_ket_thuc:"End call",
   common_goi_lai:"Callback",
-
+  phone_nghe_may:"Answer call",
+  phone_tat_may:"Hangout",
+  txt_cuoc_goi_den:"Incomming call",
+  txt_cuoc_goi_da_ket_thuc:"Call ended",
   // tiếp nhận cuộc gọi
 
   title_tiep_nhan_cuoc_goi:"receive calls",
@@ -1050,6 +1053,9 @@ const en = {
   loai_giuong_thuong: "Normal bed",
   loai_giuong_ghep_2: "Compound bed 2",
   loai_giuong_ghep_3: "Compound bed 3",
+  field_ho_so_suc_khoe:"Health record",
+  field_hinh_thuc_de:"Birth form",
+  field_can_nang_luc_de:"Birth weight",
 };
 
 export default en;

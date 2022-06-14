@@ -18,7 +18,6 @@ import { useSelector } from "react-redux";
 import { phoneStatus } from "../constants/phoneStatus";
 import { ThongKe } from "../pages/thongKe/ThongKe";
 import HoSoChuaCoTrongHeThong from "../pages/TiepNhanCuocGoi/hoSoChuaCoTrongHeThong/hoSoChuaCoTrongHeThong";
-import { CuocGoiDen } from "../pages/TiepNhanCuocGoi/Components";
 
 export const MainRoutes = () => {
   const [siderCollapsed, setSiderCollapsed] = useState(false);
@@ -27,24 +26,18 @@ export const MainRoutes = () => {
 
   const { phoneInfo } = useSelector((s) => s.auth);
 
-  const info = setTimeout(() => {
-    return {
-      domain: "tiennv",
-      username: "100",
-      password: "H5S21TubVN",
-    };
-  }, 3000);
+  const info =  {
+    domain: "tiennv",
+    username: "100",
+    password: "H5S21TubVN",
+  }
 
   const register = usePhone(info);
 
   const { status } = useSelector((state) => state.call);
   return (
     <>
-      {status === phoneStatus.invite && <CuocGoiDen />}
-      {status === phoneStatus.on_call && (
-        <Redirect to={paths.tiep_nhan_cuoc_goi} />
-      )}
-      <Layout>
+      <Layout style={{overflow:"hidden"}}>
         <MainSider collapsed={siderCollapsed} />
         <Layout.Content>
           <MainHeader toggleSider={toggleSider} />

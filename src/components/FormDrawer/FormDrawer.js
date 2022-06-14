@@ -3,7 +3,7 @@ import { Button, Col, Drawer, Row } from "antd";
 import { BackCircle } from "../../assets/svgs";
 import i18n, { languageKeys } from "../../i18n";
 import formDrawer from "./formDrawer.module.less";
-import { DeleteWhite } from "../../assets/svgs";
+import { Delete } from "../../assets/svgs";
 import cn from "classnames";
 
 const FormDrawer = ({
@@ -80,7 +80,7 @@ const FormDrawer = ({
                       color: "#FFF",
                       border: "0",
                     }}
-                    icon={<DeleteWhite style={{ marginRight: "8px" }} />}
+                    icon={<Delete style={{ marginRight: "8px" }} />}
                     className={formDrawer["button"]}
                   >
                     {deleteText}

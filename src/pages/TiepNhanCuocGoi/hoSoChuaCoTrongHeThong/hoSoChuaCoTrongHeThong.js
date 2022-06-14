@@ -2,7 +2,6 @@ import { DownOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Image } from "antd";
 import React, { useState } from "react";
 import { CallingPhoneNavBar, MuteMic, Speaker } from "../../../assets/svgs";
-import { PopOver } from "../../../components";
 import i18n, { languageKeys } from "../../../i18n";
 import DatLichKham from "../datLichKham/datLichKham";
 import { GhiChu } from "../ghiChu/GhiChu";
@@ -10,6 +9,7 @@ import style from "./hskctht.module.less";
 // import { ThongTinBenhNhanUnknown } from "../thongTinBenhNhan";
 import { UnknownAva } from "../../../assets/imgs";
 import { ThongTinBenhNhanUnknown } from "../thongTinBenhNhan";
+import { ChonHoSo } from "../../../components/popOverHoSoBenhNhan/ChonHoSo";
 
 export default function HoSoChuaCoTrongHeThong() {
   const navBarMenu = [
@@ -20,7 +20,7 @@ export default function HoSoChuaCoTrongHeThong() {
     "Kê đơn và đặt mua thuốc",
   ];
 
-  const menu = <PopOver />;
+  const menu = <ChonHoSo />;
   const [currentMenu, setCurrentMenu] = useState(navBarMenu[0]);
   return (
     <div className={style["container"]}>

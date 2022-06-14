@@ -5,4 +5,13 @@ const omiURL = "https://public-v1-stg.omicall.com"
 const bearerToken = "https://public-v1-stg.omicall.com/api/auth"
 
 
+export default class apis {
+    static tim_kiem_khach_hang = getUrlApi(
+        omiURL + "/api/contacts/list"
+    );
+  }
+
+
+
+
 export const apis = { bearerToken,omiURL };

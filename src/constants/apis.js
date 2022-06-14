@@ -20,4 +20,8 @@ export default class apis {
     apiServices.H247_BS_HIS +
       "api/partner/public/lichlamviec/layCaiDatGioMacDinh"
   ); // lấy cài đặt giờ mặc định
+  static ds_benh_nhan = getUrlApi(
+    apiServices.H247_BS_HIS +
+      "api/partner/public/benhNhan/layDanhSachBenhNhan"
+  ); // lấy cài đặt giờ mặc định
 }

@@ -6,24 +6,28 @@ import {
 } from "@ant-design/icons";
 import { Button, Col, DatePicker, Form, Row } from "antd";
 import { ThreeDot } from "../../components";
-import Table from "../../components/TableCustom/Table";
 import Topbar from "../../components/Topbar/Topbar";
 import moment from "moment";
-// import Table from "../../components/table/table";
 import i18n, { languageKeys, languages } from "../../i18n";
 
 import style from "./lscg.module.less";
 import { useForm } from "antd/lib/form/Form";
 import { useRef, useState } from "react";
 import SelectWeek from "../../components/SelectWeek/SelectWeek";
+import { rid } from "../../helpers";
+import Table from "../../components/TableCustom/Table";
+import { ActionButton } from "../../components/ActionButton/ActionButton";
+
+
 export const LichSuCuocGoi = () => {
   const selectTimeRef = useRef();
   const [form] = useForm();
   const [searchString, setSearchString] = useState("");
-  const handleMenuClick = () => {};
+
   const [fromDate, setFromDate] = useState(moment().format("YYYYMMDD"));
   const [toDate, setToDate] = useState(moment().format("YYYYMMDD"));
   const [currentTimeRange, setCurrentTimeRange] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const submitSearch = () => {
     // layDsCuocHenSapToi({ search_string: searchString });
@@ -47,48 +51,7 @@ export const LichSuCuocGoi = () => {
     // });
   };
 
-  const dataSource = [
-    {
-      stt: "1",
-      time: "12:21 - 03/03/2022",
-      sdt: "0928 999 2999",
-      loai_cuoc_goi: "Cuộc gọi đến",
-      status: "Không trả lời",
-      bac_si_tu_van: "Eleanor Pena",
-    },
-    {
-      stt: "1",
-      time: "12:21 - 03/03/2022",
-      sdt: "0928 999 2999",
-      loai_cuoc_goi: "Cuộc gọi đến",
-      status: "Cuộc gọi nhỡ",
-      bac_si_tu_van: "Eleanor Pena",
-    },
-    {
-      stt: "2",
-      time: "12:21 - 03/03/2022",
-      sdt: "0928 999 2999",
-      loai_cuoc_goi: "Cuộc gọi đến",
-      status: "Cuộc gọi nhỡ",
-      bac_si_tu_van: "Eleanor Pena",
-    },
-    {
-      stt: "3",
-      time: "12:21 - 03/03/2022",
-      sdt: "0928 999 2999",
-      loai_cuoc_goi: "Cuộc gọi đến",
-      status: "Cuộc gọi nhỡ",
-      bac_si_tu_van: "Eleanor Pena",
-    },
-    {
-      stt: "4",
-      time: "12:21 - 03/03/2022",
-      sdt: "0928 999 2999",
-      loai_cuoc_goi: "Cuộc gọi đến",
-      status: "Hoàn thành",
-      bac_si_tu_van: "Eleanor Pena",
-    },
-  ];
+  // const handleGetDataSource
 
   const columns = [
     {
@@ -115,7 +78,7 @@ export const LichSuCuocGoi = () => {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
-
+  
       render: (text) => {
         switch (text) {
           case "Cuộc gọi nhỡ":
@@ -124,7 +87,7 @@ export const LichSuCuocGoi = () => {
             return <div className="green-txt">{text}</div>;
           case "Không trả lời":
             return <div className="orange-txt">{text}</div>;
-
+  
           default:
             <div></div>;
             break;
@@ -141,10 +104,12 @@ export const LichSuCuocGoi = () => {
       dataIndex: "btn",
       key: "btn",
       render: (text) => (
-        <ThreeDot handleMenuClick={handleMenuClick}>{text}</ThreeDot>
+        <ActionButton handleMenuClick={handleMenuClick}>{text}</ActionButton>
       ),
     },
   ];
+
+  const handleMenuClick = () => {}
 
   return (
     <div className={style["container"]}>
@@ -163,12 +128,7 @@ export const LichSuCuocGoi = () => {
                 onClick={() => {
                   form.resetFields();
                   setSearchString("");
-                  // layDsCuocHenSapToi({
-                  //   TU: moment().format("YYYYMMDD"),
-                  //   DEN: moment().format("YYYYMMDD"),
-                  //   search_string: searchString,
-                  //   // page: currentPage,
-                  // });
+
                   setFromDate(moment().format("YYYYMMDD"));
                   setToDate(moment().format("YYYYMMDD"));
                 }}
@@ -200,8 +160,8 @@ export const LichSuCuocGoi = () => {
         className={style["table"]}
         showPagination={true}
         columns={columns}
-        dataSource={dataSource}
-        // loading={loadingDsNcc}
+        dataSource={dataSource.map(item => ({...item,key:rid()}))}
+        // loading={}
         // onSelectRows={(rows) => setSelectedRowKeys(rows)}
         // selectedRows={selectedRowKeys}
         // onClickRow={(data) => onOpenEdit(data)}
@@ -215,3 +175,47 @@ export const LichSuCuocGoi = () => {
     </div>
   );
 };
+
+const dataSource = [
+  {
+    stt: "1",
+    time: "12:21 - 03/03/2022",
+    sdt: "0928 999 2999",
+    loai_cuoc_goi: "Cuộc gọi đến",
+    status: "Không trả lời",
+    bac_si_tu_van: "Eleanor Pena",
+  },
+  {
+    stt: "1",
+    time: "12:21 - 03/03/2022",
+    sdt: "0928 999 2999",
+    loai_cuoc_goi: "Cuộc gọi đến",
+    status: "Cuộc gọi nhỡ",
+    bac_si_tu_van: "Eleanor Pena",
+  },
+  {
+    stt: "2",
+    time: "12:21 - 03/03/2022",
+    sdt: "0928 999 2999",
+    loai_cuoc_goi: "Cuộc gọi đến",
+    status: "Cuộc gọi nhỡ",
+    bac_si_tu_van: "Eleanor Pena",
+  },
+  {
+    stt: "3",
+    time: "12:21 - 03/03/2022",
+    sdt: "0928 999 2999",
+    loai_cuoc_goi: "Cuộc gọi đến",
+    status: "Cuộc gọi nhỡ",
+    bac_si_tu_van: "Eleanor Pena",
+  },
+  {
+    stt: "4",
+    time: "12:21 - 03/03/2022",
+    sdt: "0928 999 2999",
+    loai_cuoc_goi: "Cuộc gọi đến",
+    status: "Hoàn thành",
+    bac_si_tu_van: "Eleanor Pena",
+  },
+];
+
