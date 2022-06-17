@@ -8,8 +8,7 @@ import moment from "moment";
 import Search from "antd/lib/transfer/search";
 import { text } from "@fortawesome/fontawesome-svg-core";
 
-export default function DatLichKham() {
-  const [form] = Form.useForm();
+export default function DatLichKham({form}) {
   const onSearch = (value) => console.log(value);
   const dataSource = [
     {
@@ -68,7 +67,6 @@ export default function DatLichKham() {
           <div className={style["textTitle"]}>Đặt lịch khám</div>
         </div>
         <div className={style["wrapForm"]}>
-          <Form form={form} layout="vertical">
             <Row gutter={10}>
               <Col span={8}>
                 <Form.Item label="Chọn bệnh viện" required tooltip="Chọn">
@@ -113,7 +111,7 @@ export default function DatLichKham() {
                 >
                   <TimePicker
                     onChange={onChange}
-                    defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
+                    defaultValue={moment("00:00:00", "HH:mm:ss")}
                   />
                 </Form.Item>
               </Col>
@@ -128,7 +126,7 @@ export default function DatLichKham() {
                 >
                   <TimePicker
                     onChange={onChange}
-                    defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
+                    defaultValue={moment("00:00:00", "HH:mm:ss")}
                   />
                 </Form.Item>
               </Col>
@@ -154,7 +152,6 @@ export default function DatLichKham() {
                 </Button>
               </Form.Item>
             </Row>
-          </Form>
         </div>
       </div>
       <div className={style["wrap"]}>

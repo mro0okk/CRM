@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Form, Layout, Typography } from "antd";
+import { Form, Layout, Modal, Typography } from "antd";
 import { useSelector } from "react-redux";
 import i18n, { languageKeys } from "../../i18n";
 import moment from "moment";
@@ -7,45 +7,97 @@ import style from "./tncg.module.less";
 import * as tncg from "./Components";
 import { phoneStatus } from "../../constants/phoneStatus";
 import { ThongTinBenhNhan } from "./thongTinBenhNhan/ThongTinBenhNhan";
-import { HLog } from "../../helpers";
+import { common_post, HLog, rid } from "../../helpers";
 import { GhiChu } from "./ghiChu/GhiChu";
 import DatLichKham from "./datLichKham/datLichKham";
 import { arrBtn } from "./Components/ThongTinCuocGoi";
 import Topbar from "../../components/Topbar/Topbar";
+import { PhoneModal } from "./Components/Phone/PhoneModal";
+import { ChonHoSo } from "../../components";
+import apis from "../../constants/apis";
+import { keys, userProfile } from "../../constants";
 
-const { Available, ThongTinCuocGoi, Phone } = tncg;
+const { Available, ThongTinCuocGoi } = tncg;
 const { Header, Content } = Layout;
 const { Title } = Typography;
-const { PhoneModal } = Phone;
 export const TiepNhanCuocGoi = () => {
   // mô phỏng nhận trạng thái cuộc gọi tại store
 
-  const { status, client } = useSelector((state) => state.call); // trạng thái cuộc gọi và thông tin khách hàng gọi đến
+  const { status, client, phoneNumber,pickup } = useSelector((state) => state.call); // trạng thái cuộc gọi và thông tin khách hàng gọi đến
   const [form] = Form.useForm();
 
-  const [patientService, setPatientService] = useState();
-  
-  let counter = 0;
+  const [patientService, setPatientService] = useState(null); // tab dịch vụ
+  const [currentClient, setCurrentClient] = useState({}); // khách hàng được chọn
+  const [visibleDsHoSo, setVisibleDsHoSo] = useState(false); // hiển thị danh sách hồ sơ
+  const [dsHoSoBenhNhan, setDsHoSoBenhNhan] = useState([]); // ds hồ sơ bệnh nhân cho màn chọn hồ sơ
+  const [isNewPatient, setIsNewPatient] = useState(false); // Là bệnh nhân mới
 
   useEffect(() => {
-    if(status === phoneStatus.end_call){
-      console.log("KET_THUC_CUOC_GOI")
+    return () => {
+      setPatientService(null);
+      setCurrentClient({});
+      setVisibleDsHoSo(false);
+      setIsNewPatient(false);
+    };
+  }, []);
+HLog("RE_RENDER")
+
+  // Hàm lấy danh sách hồ sơ theo cuộc gọi ** nếu chưa có thì chuyển về thêm mới bệnh nhân
+  const handleLayDsHoSo = async (SO_DIEN_THOAI) => {
+    HLog(SO_DIEN_THOAI)
+    try {
+      let body = {
+        partner_code: userProfile.partner_code,
+        SO_DIEN_THOAI,
+        limit: keys.limit,
+        page: 1,
+      };
+
+      let res = await common_post(apis.ds_ho_so_benh_nhan, body, false);
+      if (res && res.status === "OK") {
+        let { result } = res;
+        if(result.length === 0){
+          setIsNewPatient(true)
+          setVisibleDsHoSo(false);
+        }else{
+          setVisibleDsHoSo(true);
+          setDsHoSoBenhNhan(result.map((item) => ({...item,key:rid()})));
+        }
+      }
+    } catch (error) {
+      HLog("Lỗi lấy danh sách hồ sơ bệnh nhân: ", error);
     }
+  };
 
-  },[status])
+  // Hàm lấy thông tin bệnh nhân mỗi với mỗi số
+  const handleSetCurrentClient = (patientInfo) => {
+    setCurrentClient(patientInfo)
+  }
 
-
+  // Nếu chấp nhận cuộc gọi đến thì gọi api lấy danh sách hồ sơ bệnh nhân
+  useEffect( async () => {
+    if (pickup) {
+     await handleLayDsHoSo(phoneNumber)
+    }
+    // if(status === phoneStatus.available){
+    //   setPatientService(null)
+    // }
+  }, [pickup]);
+  HLog("nhac may ",pickup)
+//=======================================================================================
   const patientOptions = () => {
     switch (patientService) {
       case arrBtn[0].KEY:
-        return <ThongTinBenhNhan form={form} />; // chi tiết thông tin bệnh nhân trong cuộc gọi
-      case arrBtn[0].KEY:
+        return (
+          <ThongTinBenhNhan editable form={form} patientID={currentClient.ID} />
+        ); // chi tiết thông tin bệnh nhân trong cuộc gọi
+      case arrBtn[1].KEY:
         return <GhiChu form={form} />;
-      case arrBtn[0].KEY:
-        return <Available form={form} />;
-      case arrBtn[0].KEY:
+      case arrBtn[2].KEY:
+        return <DatLichKham form={form} />;
+      case arrBtn[3].KEY:
         return <DatLichKham form={form} />; // đặt lịch khám
-      case arrBtn[0].KEY:
+      case arrBtn[4].KEY:
         return <Available />; // Cận lâm sàng
 
       default:
@@ -55,30 +107,48 @@ export const TiepNhanCuocGoi = () => {
   return (
     <div className={style["container"]}>
       <Layout className="layout">
-        {/* {window.omiSDK.getStatus() === "unregistered" && <Phone.PhoneModal />} */}
         <Topbar
           title={i18n.t(languageKeys.menu_Tiep_nhan_cuoc_goi)}
           showTotalNum={false}
+          className={style["topbar"]}
         />
 
         <div style={{ backgroundColor: "#ffffff80" }}>
-          {status === phoneStatus.on_call || status === phoneStatus.end_call ? (
+          {status === phoneStatus.on_call ? (
             <ThongTinCuocGoi
               page={patientService}
               onPage={setPatientService}
+              patientInfo={currentClient}
+              isNewPatient={isNewPatient}
+              dataSource={dsHoSoBenhNhan}
+              onSetCurrClient={handleSetCurrentClient}
             />
           ) : (
             <></>
           )}
         </div>
-              {/* <audio src="https://drive.google.com/uc?id=1t5N9aL8FhH0MvCM9VGls2G8pRM2TL4qx&export=download"
-              type="audio/ogg" autoPlay>
-              </audio> */}
         <Content style={{ padding: "2rem" }}>
-          <Form form={form}>{patientOptions()}</Form>
+          <Form form={form} layout="vertical">
+            {patientOptions()}
+          </Form>
         </Content>
         <PhoneModal />
       </Layout>
+
+      <Modal
+        visible={visibleDsHoSo}
+        footer={null}
+        onCancel={() => setVisibleDsHoSo(false)}
+      >
+        <ChonHoSo
+          onVisible={setVisibleDsHoSo}
+          onFillInfo={(info) => {
+            setCurrentClient(info); // chọn hồ sơ bệnh nhân
+            setPatientService(arrBtn[0].KEY);
+          }}
+          dataSource={dsHoSoBenhNhan}
+        />
+      </Modal>
     </div>
   );
 };

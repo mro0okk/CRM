@@ -35,6 +35,7 @@ const en = {
   phone_tat_may:"Hangout",
   txt_cuoc_goi_den:"Incomming call",
   txt_cuoc_goi_da_ket_thuc:"Call ended",
+  phone_chua_ket_noi_tong_dai:"cannot connect to call center",
   // tiếp nhận cuộc gọi
 
   title_tiep_nhan_cuoc_goi:"receive calls",
@@ -46,7 +47,6 @@ const en = {
   menu_bang_dieu_khien: "Control system",
   menu_quan_ly_nhan_vien: "Staff management ",
   menu_quan_ly_lich_lam_viec: "Work schedule",
-  menu_thong_ke: "Statistic",
 
   cuoc_goi_di: "Calling",
 

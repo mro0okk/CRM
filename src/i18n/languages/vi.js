@@ -42,6 +42,10 @@ const vi = {
   phone_dang_do_chuong:"Đang đổ chuông",
   txt_cuoc_goi_den:"Cuộc gọi đến",
   txt_cuoc_goi_da_ket_thuc:"Cuộc gọi đã kết thúc",
+  phone_chua_ket_noi_tong_dai:"Chưa kết nối tới tổng đài",
+  phone_goi_nho:"Gọi nhỡ",
+  phone_hoan_thanh:"Hoàn thành",
+  phone_khong_tra_loi:"Không trả lời",
 
   // tiếp nhận cuộc gọi
   title_tiep_nhan_cuoc_goi:"Tiếp nhận cuộc gọi",
@@ -60,7 +64,6 @@ const vi = {
   menu_bang_dieu_khien: "Bảng điều khiển",
   menu_quan_ly_nhan_vien: "Quản lý nhân viên ",
   menu_quan_ly_lich_lam_viec: "Quản lý lịch làm việc",
-  menu_thong_ke: "Thông kê",
 
   cuoc_goi_di: "Cuộc gọi đi",
   //login text

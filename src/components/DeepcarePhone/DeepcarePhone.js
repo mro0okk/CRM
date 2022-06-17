@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Input, Typography } from "antd";
+import { Button, Input, notification, Typography } from "antd";
 import cn from "classnames";
 import {
+  acceptCall,
   changeStatus,
   makeCall,
   resetState,
 } from "../../ducks/slices/callSlice";
 import phone from "./DeepcarePhone.module.less";
-import { HLog } from "../../helpers";
+import { HLog, mobilevalidate } from "../../helpers";
 import {
   AudioMutedOutlined,
+  CloseOutlined,
   DeleteFilled,
   PhoneOutlined,
 } from "@ant-design/icons";
@@ -21,11 +23,12 @@ import { DeleteNumber } from "../../assets/svgs";
 const { Title, Text } = Typography;
 
 const DeepcarePhone = () => {
-
   const [display, setDisplay] = useState("");
   const [mute, setMute] = useState(false);
 
-  const {status,duration} = useSelector(state => state.call)
+  const { status, duration, phoneNumber, reasonCall } = useSelector(
+    (state) => state.call
+  );
 
   const dispatch = useDispatch();
 
@@ -37,15 +40,21 @@ const DeepcarePhone = () => {
 
   // gọi đi
   const handleCall = (phoneNumber) => {
-    HLog("PHONE_NUMBER", phoneNumber);
-    dispatch(makeCall(phoneNumber));
+    if (mobilevalidate(phoneNumber)) {
+      dispatch(makeCall(phoneNumber));
+    } else {
+      notification.warn({
+        message: "Vui lòng nhập số điện thoại !",
+      });
+    }
   };
 
   // Dừng cuộc gọi lập tức
-  const handleCancelCall = () => {
-    window.omiSDK.stopCall();
-    dispatch(resetState())
-    setDisplay("")
+  const handleCancelCall = async () => {
+    HLog("AN_ROi");
+    await window.omiSDK.stopCall();
+    dispatch(resetState());
+    setDisplay("");
   };
   // bật tắt mic trong cuộc gọi
   const handleToggleMute = () => {
@@ -57,8 +66,7 @@ const DeepcarePhone = () => {
   const handleDel = () => {
     setDisplay(display.slice(0, display.length - 1));
   };
-  HLog("TRANG_THAI_CUOC_GOI", status);
-  const actionPhoneBtn = (status) => {
+  const actionPhone = (status) => {
     switch (status) {
       case phoneStatus.connecting:
         return (
@@ -66,6 +74,7 @@ const DeepcarePhone = () => {
             onCancel={handleCancelCall}
             toggleMute={handleToggleMute}
             mute={mute}
+            status={status}
           />
         );
       case phoneStatus.on_call:
@@ -74,6 +83,16 @@ const DeepcarePhone = () => {
             onCancel={handleCancelCall}
             toggleMute={handleToggleMute}
             mute={mute}
+            status={status}
+          />
+        );
+      case phoneStatus.invite:
+        return (
+          <Calling
+            onCancel={handleCancelCall}
+            toggleMute={handleToggleMute}
+            mute={mute}
+            status={status}
           />
         );
       case phoneStatus.ringing:
@@ -82,61 +101,68 @@ const DeepcarePhone = () => {
             onCancel={handleCancelCall}
             toggleMute={handleToggleMute}
             mute={mute}
+            status={status}
           />
         );
       case phoneStatus.end_call:
         return (
           <EndCall
-            onCancel={handleCancelCall}
-            onCallback={handleCall(display)}
+            onCancel={() => {
+              setDisplay("");
+              dispatch(resetState());
+            }}
+            onCallback={() => handleCall(display)}
             mute={mute}
           />
         );
 
       default:
-        return <></>;
+        return (
+          <Dialling
+            onCall={() => handleCall(display)}
+            setDisplay={handleSetDisplay}
+            display={display}
+            onDelete={handleDel}
+          />
+        );
     }
   };
-useEffect(() => {
-  HLog("WINDOWSDK",window.omiSDK.getStatus())
-})
+
+  useEffect(() => {
+    if (status === phoneStatus.invite || status === phoneStatus.end_call) {
+      HLog("END_CALL", phoneNumber);
+      setDisplay(phoneNumber);
+    }
+  }, [status]);
+  // Số gọi đến
+  const handleSetDisplay = (value) => {
+    setDisplay(value);
+  };
   return (
     <div className={phone["container"]}>
       <div className={phone["display"]}>
         <Input
           value={display}
-          onChange={(e) => setDisplay(e.target.value)}
+          onChange={(e) => {
+            let { value } = e.target;
+            setDisplay(value);
+          }}
           className={phone["call-input"]}
           onPressEnter={(e) => handleCall(e.target.value)}
           readOnly={status !== phoneStatus.available}
-          pattern={new RegExp(/[^\d]/g)}
+          autoFocus
         />
         <h2 className={phone["text-zone"]}>
           {status === phoneStatus.connecting &&
             i18n.t(languageKeys.phone_dang_goi)}
           {status === phoneStatus.ringing &&
             i18n.t(languageKeys.phone_dang_do_chuong)}
-            {
-              status === phoneStatus.on_call && (
-                <div>{duration}</div>
-              )
-            }
+          {status === phoneStatus.on_call && <div>{duration}</div>}
+          {status === phoneStatus.end_call && reasonCall}
         </h2>
       </div>
-      <div className={phone["keypad"]}>
-        {status === phoneStatus.available && (
-          <NumPad onDisplay={setDisplay} display={display} />
-        )}
-      </div>
-      <div className={phone["btn-wrapper"]}>
-        {status === phoneStatus.available && (
-          <Dialling
-            onCall={() => handleCall(display)}
-            onDelete={() => handleDel()}
-          />
-        )}
-        {actionPhoneBtn(status)}
-      </div>
+
+      <div className={phone["btn-wrapper"]}>{actionPhone(status)}</div>
     </div>
   );
 };
@@ -160,6 +186,7 @@ const NumPad = ({ onDisplay = () => {}, display }) => {
   ];
 
   const handleClickNum = (number) => {
+    HLog("NUMBER", number);
     onDisplay(display.concat(number));
   };
 
@@ -180,25 +207,35 @@ const NumPad = ({ onDisplay = () => {}, display }) => {
   );
 };
 
-const Dialling = ({ onCall, onDelete = () => {} }) => {
+const Dialling = ({
+  onCall = () => {},
+  onDelete = () => {},
+  setDisplay = () => {},
+  display = "",
+}) => {
   return (
-    <div
-      style={{
-        marginLeft: 34,
-      }}
-    >
-      <Button
-        type="primary"
-        shape="circle"
-        className={phone["btn-call"]}
-        onClick={() => onCall()}
+    <>
+      <div className={phone["keypad"]}>
+        <NumPad onDisplay={setDisplay} display={display} />
+      </div>
+      <div
+        style={{
+          marginLeft: 34,
+        }}
       >
-        <PhoneOutlined className={phone["icon-call"]} />
-      </Button>
-      <Button className={phone["btn-del"]} onClick={() => onDelete()}>
-        <DeleteNumber />
-      </Button>
-    </div>
+        <Button
+          type="primary"
+          shape="circle"
+          className={phone["btn-call"]}
+          onClick={() => onCall()}
+        >
+          <PhoneOutlined className={phone["icon-call"]} />
+        </Button>
+        <Button className={phone["btn-del"]} onClick={() => onDelete()}>
+          <DeleteNumber />
+        </Button>
+      </div>
+    </>
   );
 };
 
@@ -206,46 +243,73 @@ const Calling = ({
   onCancel = () => {},
   toggleMute = () => {},
   mute = false,
+  status,
 }) => {
+  const dispatch = useDispatch();
+  HLog("STATUS_CALLING", status);
   return (
-    <div className={phone["calling"]}>
-      <Button
-        onClick={() => toggleMute()}
-        className={cn(phone["btn-size"], mute && phone["danger-btn"])}
-        shape="circle"
-        type="primary"
-      >
-        <AudioMutedOutlined className={phone["icon-phone"]} />
-      </Button>
-      <Button
-        shape="circle"
-        type="primary"
-        className={phone["danger-btn"]}
-        onClick={() => onCancel()}
-      >
-        <PhoneOutlined
-          className={cn(phone["icon-phone"], phone["call-hangout"])}
-        />
-      </Button>
-    </div>
+    <>
+      <div className={phone["keypad"]}></div>
+      <div className={phone["calling"]}>
+        {status !== phoneStatus.invite && (
+          <Button
+            onClick={() => toggleMute()}
+            className={cn(phone["btn-size"], mute && phone["danger-btn"])}
+            shape="circle"
+            type="primary"
+          >
+            <AudioMutedOutlined className={phone["icon-phone"]} />
+          </Button>
+        )}
+        {status === phoneStatus.invite && (
+          <Button
+            onClick={() => dispatch(acceptCall())}
+            className={phone["btn-size"]}
+            style={{ backgroundColor: "#2db4a6" }}
+            shape="circle"
+            type="primary"
+          >
+            <PhoneOutlined />
+          </Button>
+        )}
+        <Button
+          shape="circle"
+          type="primary"
+          className={phone["danger-btn"]}
+          onClick={() => onCancel()}
+        >
+          <PhoneOutlined
+            className={cn(phone["icon-phone"], phone["call-hangout"])}
+          />
+        </Button>
+      </div>
+    </>
   );
 };
 const EndCall = ({ onCancel = () => {}, onCallback = () => {} }) => {
   return (
-    <div className={phone["calling"]}>
-      <Button
-        onClick={() => onCancel()}
-        className={phone["btn-size"]}
-        shape="circle"
-        type="primary"
-      >
-        CANCEL
-      </Button>
-      <Button shape="circle" type="primary" onClick={() => onCallback()}>
-        <PhoneOutlined
-          className={cn(phone["icon-phone"], phone["call-hangout"])}
-        />
-      </Button>
-    </div>
+    <>
+      <div className={phone["keypad"]}></div>
+      <div className={phone["calling"]}>
+        <Button
+          onClick={() => onCancel()}
+          className={phone["btn-size"]}
+          shape="circle"
+          type="primary"
+        >
+          <CloseOutlined />
+        </Button>
+        <Button
+          shape="circle"
+          type="primary"
+          className={phone["btn-call"]}
+          onClick={() => onCallback()}
+        >
+          <PhoneOutlined
+            className={cn(phone["icon-phone"], phone["call-hangout"])}
+          />
+        </Button>
+      </div>
+    </>
   );
 };

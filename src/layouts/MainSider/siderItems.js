@@ -64,11 +64,11 @@ export const siderItems = [
     path: paths.lich_lam_viec,
     subs: [],
   },
-  {
-    key: keys.feature_Quan_ly_thong_ke,
-    title: i18n.t(languageKeys.menu_thong_ke),
-    icon: <Chart />,
-    path: paths.thong_ke,
-    subs: [],
-  },
+  // {
+  //   key: keys.feature_Quan_ly_thong_ke,
+  //   title: i18n.t(languageKeys.menu_Thong_ke),
+  //   icon: <Chart />,
+  //   path: paths.thong_ke,
+  //   subs: [],
+  // },
 ];
