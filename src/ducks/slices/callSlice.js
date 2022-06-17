@@ -27,24 +27,23 @@ const callSlice = createSlice({
     },
     addPhone: (state, { payload }) => {},
     makeCall: (state, action) => {
-      window.omiSDK.makeCall(action.payload);
+      // window.omiSDK.makeCall(action.payload);
       state.status = phoneStatus.connecting
       state.phoneNumber = action.payload
     },
     acceptCall: (state, {payload}) => {
-      window.omiSDK.acceptCall();
       state.status = phoneStatus.on_call;
-      state.client = payload
+      // state.client = payload
       state.pickup = true
     },
-    onCall: (state, { payload }) => {
-      state.callInfo = { ...state.callInfo, duration: payload };
-    },
+    // onCall: (state, { payload }) => {
+    //   state.callInfo = { ...state.callInfo, duration: payload };
+    // },
     durationing: (state, { payload }) => {
       state.duration = payload.duration
     },
     rejectCall: (state,action) => {
-      window.omiSDK.rejectCall()
+      // window.omiSDK.rejectCall()
       state.status = phoneStatus.rejected
       
     },
@@ -53,9 +52,6 @@ const callSlice = createSlice({
         state.dataAfterCall = action.payload
         state.pickup = false
      },
-    // acceptCall:(status,{payload}) => {
-    //   state.isAccepted = payload
-    // },
     resetState:(state,action) => {
       HLog("REDUX_RESET_STATE")
       state.status = phoneStatus.available
@@ -77,7 +73,7 @@ export const {
   acceptCall,
   dataAfterCall,
   addPhone,
-  onCall,
+  // onCall,
   durationing,
   resetState,
   endCall,

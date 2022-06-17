@@ -36,4 +36,8 @@ export default class apis {
     apiServices.H247_BS_HIS +
       "api/partner/public/crm/cuocGoi/layDSLichSuCuocGoi"
   ); // lấy danh sách LỊch sử cuộc gọi
+  static luu_cuoc_goi = getUrlApi(
+    apiServices.H247_BS_HIS +
+      "api/partner/public/crm/cuocGoi/layDSLichSuCuocGoi"
+  ); // Lưu cuộc gọi khi kết thúc
 }

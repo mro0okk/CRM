@@ -1,3 +1,4 @@
+import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import Topbar from "../../components/Topbar/Topbar";
 import apis from "../../constants/apiOmicall/apiOmiCall";
@@ -28,7 +29,8 @@ export const BangDieuKhien = () => {
       HLog("DS_NHAN_VIEN", res);
       if (res) {
         let { next_page, page_number, total_items,items } = res;
-        setDsNhanVien(items);
+        
+        setDsNhanVien(items.map(item => ({...item,key:rid()})));
       }
     } catch (error) {
       HLog("Lỗi lấy danh sách nhân viên:", error);
@@ -49,18 +51,28 @@ export const BangDieuKhien = () => {
       />
 
       <div className={style["wrap"]}>
-        {dsNhanVien.map((staff) => (
-          <div key={rid()} className={style["contentWrap"]}>
-            {staff.is_active ? (
-              <div className={style["status1"]}>Online</div>
-            ) : (
-              <div className={style["status2"]}>Offline</div>
-            )}
-
-            <div className={style["name"]}>{staff.create_by.name}</div>
-            <div className={style["email"]}>{staff.identify_info}</div>
-          </div>
-        ))}
+        {dsNhanVien.length === 0 ? (
+          <>              
+            <Spin/>
+          </>
+        ): (
+          <>
+            {
+              dsNhanVien.map((staff) => (
+                <div key={rid()} className={style["contentWrap"]}>
+                  {staff.is_active ? (
+                    <div className={style["status1"]}>Online</div>
+                  ) : (
+                    <div className={style["status2"]}>Offline</div>
+                  )}
+      
+                  <div className={style["name"]}>{staff.create_by.name}</div>
+                  <div className={style["email"]}>{staff.identify_info}</div>
+                </div>
+              ))
+            }
+          </>
+        )}
       </div>
     </div>
   );

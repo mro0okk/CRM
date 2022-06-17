@@ -65,6 +65,7 @@ const usePhone = (register /*: object*/) => {
       },
 
       acceptedByOther: (data) => {
+        console.log("acceptByOther::::",data)
         notification.warn({
           message:"Cuộc gọi đã nhận bởi người khác",
         })

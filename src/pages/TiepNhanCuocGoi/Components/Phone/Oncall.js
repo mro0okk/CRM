@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import cn from "classnames";
 import { Button, Row, Typography } from "antd";
@@ -13,10 +13,11 @@ import i18n, { languageKeys } from "../../../../i18n";
 import { arrBtn } from "../ThongTinCuocGoi";
 
 const { Title, Text } = Typography;
-export const Oncall = ({onPage}) => {
-  const [mute, setMute] = useState(false);
-  const { status, phoneNumber, duration,callee } = useSelector((s) => s.call);
+const Oncall = ({ onPage }) => {
+  const [mute, setMute] = useState(false); // trạng thái mic cuộc gọi
+  const { status, phoneNumber, duration, callee } = useSelector((s) => s.call);
   const dispatch = useDispatch();
+
   const handleMuteCall = () => {
     if (status === phoneStatus.on_call) {
       window.omiSDK.toggleMute(!mute);
@@ -32,9 +33,9 @@ export const Oncall = ({onPage}) => {
       dispatch(changeStatus(phoneStatus.end_call));
     } else if (status === phoneStatus.end_call) {
       dispatch(changeStatus(phoneStatus.available));
-      dispatch(resetState())
+      dispatch(resetState());
     } else return;
-    onPage(arrBtn[0].KEY)
+    onPage(null);
     dispatch(resetState());
   };
   return (
@@ -86,3 +87,5 @@ export const Oncall = ({onPage}) => {
     </>
   );
 };
+
+export default memo(Oncall)

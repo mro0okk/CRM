@@ -14,7 +14,7 @@ import cn from "classnames";
 import i18n, { languageKeys } from "../../../i18n";
 import { useDispatch, useSelector } from "react-redux";
 import style from "../tncg.module.less";
-import { Oncall } from "./Phone/Oncall";
+import Oncall from "./Phone/Oncall";
 import { UserFill } from "../../../assets/svgs";
 import { HLog, rid } from "../../../helpers";
 import { ChonHoSo } from "../../../components/popOverHoSoBenhNhan/ChonHoSo";
@@ -42,18 +42,13 @@ const ThongTinCuocGoi = ({
     }
   }, [status]);
 
-  const handleAfterCall = async () => {
-    try {
-      let body = {};
-    } catch (error) {}
-  };
   HLog("THONG_TIN_BENH_NHAN::", patientInfo);
   return (
     <Row className={style["DamThoai"]} gutter={10}>
-      
+
       {!infoOnly && (
         <Col span={6} style={{ padding: "12px 12px 12px 0" }}>
-          <Oncall />
+          <Oncall onPage={onPage} />
         </Col>
       )}
 
@@ -74,7 +69,7 @@ const ThongTinCuocGoi = ({
                     />
                   }
                   className={style["avatar"]}
-                ></Avatar>
+                />
                 <div className={style["detail"]}>
                   {isNewPatient ? (
                     <>
@@ -106,7 +101,7 @@ const ThongTinCuocGoi = ({
                     />
                   }
                   trigger="click"
-                  disabled={isNewPatient}
+                  disabled={disableBtn}
                 >
                   <Button className={style["btn-file"]}>
                     {i18n.t(languageKeys.txt_doi_ho_so)} <DownOutlined />

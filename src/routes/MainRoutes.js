@@ -32,9 +32,8 @@ export const MainRoutes = () => {
     password: "H5S21TubVN",
   }
 
-  const register = usePhone(info);
+  usePhone(info);
 
-  const { status } = useSelector((state) => state.call);
   return (
     <>
       <Layout style={{overflow:"hidden"}}>

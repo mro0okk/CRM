@@ -41,6 +41,7 @@ const DeepcarePhone = () => {
   // gọi đi
   const handleCall = (phoneNumber) => {
     if (mobilevalidate(phoneNumber)) {
+      window.omiSDK.makeCall(phoneNumber);
       dispatch(makeCall(phoneNumber));
     } else {
       notification.warn({
@@ -133,6 +134,7 @@ const DeepcarePhone = () => {
       HLog("END_CALL", phoneNumber);
       setDisplay(phoneNumber);
     }
+    HLog("STATUS_CUOC_GOI",status)
   }, [status]);
   // Số gọi đến
   const handleSetDisplay = (value) => {
@@ -263,7 +265,12 @@ const Calling = ({
         )}
         {status === phoneStatus.invite && (
           <Button
-            onClick={() => dispatch(acceptCall())}
+            onClick={() => {
+              if(window.omiSDK){
+                window.omiSDK.acceptCall()
+                dispatch(acceptCall())
+              }
+            }}
             className={phone["btn-size"]}
             style={{ backgroundColor: "#2db4a6" }}
             shape="circle"

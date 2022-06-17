@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import style from "./textBox.module.less";
 
-export const TextBox = () => {
+const TextBox = ({ onText = () => {} }) => {
   // var icons = ReactQuill.import("ui/icons");
   TextBox.modules = {
     toolbar: [
@@ -42,11 +42,11 @@ export const TextBox = () => {
           className={style["textBox"]}
           modules={TextBox.modules}
           formats={TextBox.formats}
-          onChange={handleBody}
-          value={body}
+          onChange={onText}
           placeholder="Nhập nội dung"
         />
       </div>
     </div>
   );
 };
+export default memo(TextBox);

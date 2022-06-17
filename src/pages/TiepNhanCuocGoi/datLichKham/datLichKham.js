@@ -2,13 +2,13 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Col, Form, Row, Select, Table, TimePicker } from "antd";
 import React from "react";
 import { DatLichKhamIcon, DocumentIconDatKham } from "../../../assets/svgs";
-import { TextBox } from "../../../components";
 import style from "./datLichKham.module.less";
 import moment from "moment";
 import Search from "antd/lib/transfer/search";
 import { text } from "@fortawesome/fontawesome-svg-core";
+import TextBox from "../../../components/textBox/TextBox";
 
-export default function DatLichKham({form}) {
+export default function DatLichKham({form, patientID}) {
   const onSearch = (value) => console.log(value);
   const dataSource = [
     {
@@ -69,7 +69,9 @@ export default function DatLichKham({form}) {
         <div className={style["wrapForm"]}>
             <Row gutter={10}>
               <Col span={8}>
-                <Form.Item label="Chọn bệnh viện" required tooltip="Chọn">
+                <Form.Item label="Chọn bệnh viện" required tooltip="Chọn"
+                  name="BENH_VIEN_ID"
+                >
                   <Select placeholder="Select a option ">
                     <Select.Option value="demo">Demo</Select.Option>
                     <Select.Option value="demo">Demo</Select.Option>
@@ -82,6 +84,8 @@ export default function DatLichKham({form}) {
                   label="Chọn dịch vụ"
                   required
                   tooltip="This is a required field"
+                  name=""
+
                 >
                   <Select placeholder="Select a option ">
                     <Select.Option value="demo">Demo</Select.Option>

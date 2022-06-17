@@ -131,7 +131,8 @@ export const LichSuCuocGoi = () => {
       };
       let res = await common_post(apis.lich_su_cuoc_goi, body, false);
       if (res && res.status === "OK") {
-        let { result } = res;
+        let { result,current_page } = res;
+        setCurrPage(current_page)
         setDataSource(
          () =>  result.map((item, index) => ({ ...item, key: rid(), STT: index + 1 }))
         );
@@ -199,53 +200,11 @@ export const LichSuCuocGoi = () => {
         // totalResult={totalResult}
         // currentPage={currentPage}
         limit={keys.limit}
-        scroll={{ y: "calc(100vh - 250px)" }}
-        // onNext={() => handleGetDataSource(searchString, currPage + 1)}
-        // onPrev={() => handleGetDataSource(searchString, currPage - 1)}
+        // scroll={{ y: "calc(100vh - 250px)" }}
+        onNext={() => handleGetDataSource(searchString, currPage + 1)}
+        onPrev={() => handleGetDataSource(searchString, currPage - 1)}
       />
     </div>
   );
 };
 
-// const dataSource = [
-//   {
-//     stt: "1",
-//     time: "12:21 - 03/03/2022",
-//     sdt: "0928 999 2999",
-//     loai_cuoc_goi: "Cuộc gọi đến",
-//     status: "Không trả lời",
-//     bac_si_tu_van: "Eleanor Pena",
-//   },
-//   {
-//     stt: "1",
-//     time: "12:21 - 03/03/2022",
-//     sdt: "0928 999 2999",
-//     loai_cuoc_goi: "Cuộc gọi đến",
-//     status: "Cuộc gọi nhỡ",
-//     bac_si_tu_van: "Eleanor Pena",
-//   },
-//   {
-//     stt: "2",
-//     time: "12:21 - 03/03/2022",
-//     sdt: "0928 999 2999",
-//     loai_cuoc_goi: "Cuộc gọi đến",
-//     status: "Cuộc gọi nhỡ",
-//     bac_si_tu_van: "Eleanor Pena",
-//   },
-//   {
-//     stt: "3",
-//     time: "12:21 - 03/03/2022",
-//     sdt: "0928 999 2999",
-//     loai_cuoc_goi: "Cuộc gọi đến",
-//     status: "Cuộc gọi nhỡ",
-//     bac_si_tu_van: "Eleanor Pena",
-//   },
-//   {
-//     stt: "4",
-//     time: "12:21 - 03/03/2022",
-//     sdt: "0928 999 2999",
-//     loai_cuoc_goi: "Cuộc gọi đến",
-//     status: "Hoàn thành",
-//     bac_si_tu_van: "Eleanor Pena",
-//   },
-// ];

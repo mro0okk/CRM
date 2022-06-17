@@ -39,12 +39,15 @@ const CuocGoiDen = forwardRef(({}, ref) => {
 
   const handleOk = () => {
     setIsModalVisible(false);
+    if(window.omiSDK){
+      window.omiSDK.acceptCall();
+    }
     dispatch(acceptCall());
   };
 
   const handleCancel = () => {
     dispatch(rejectCall());
-    // window.omiSDK.stopCall();
+    window.omiSDK.rejectCall();
     dispatch(resetState());
     setIsModalVisible(false);
   };

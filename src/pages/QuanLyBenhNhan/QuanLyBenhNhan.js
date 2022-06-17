@@ -20,6 +20,7 @@ export const QuanLyBenhNhan = () => {
   const [searchString, setSearchString] = useState("");
   const [dataSource, setDataSource] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   
   const handleGetDataSource = async (search_string="",page=1) => {
     setSearchString(search_string)

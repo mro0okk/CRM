@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Form, Layout, Modal, Typography } from "antd";
+import { Form, Layout, Modal, notification, Typography } from "antd";
 import { useSelector } from "react-redux";
 import i18n, { languageKeys } from "../../i18n";
 import moment from "moment";
@@ -20,10 +20,13 @@ import { keys, userProfile } from "../../constants";
 const { Available, ThongTinCuocGoi } = tncg;
 const { Header, Content } = Layout;
 const { Title } = Typography;
+
 export const TiepNhanCuocGoi = () => {
   // mô phỏng nhận trạng thái cuộc gọi tại store
 
-  const { status, client, phoneNumber,pickup } = useSelector((state) => state.call); // trạng thái cuộc gọi và thông tin khách hàng gọi đến
+  const { status, client, phoneNumber, pickup } = useSelector(
+    (state) => state.call
+  ); // trạng thái cuộc gọi và thông tin khách hàng gọi đến
   const [form] = Form.useForm();
 
   const [patientService, setPatientService] = useState(null); // tab dịch vụ
@@ -40,11 +43,11 @@ export const TiepNhanCuocGoi = () => {
       setIsNewPatient(false);
     };
   }, []);
-HLog("RE_RENDER")
+  HLog("RE_RENDER :::: TIEP_NHAN_CUOC_GOi");
 
   // Hàm lấy danh sách hồ sơ theo cuộc gọi ** nếu chưa có thì chuyển về thêm mới bệnh nhân
   const handleLayDsHoSo = async (SO_DIEN_THOAI) => {
-    HLog(SO_DIEN_THOAI)
+    HLog(SO_DIEN_THOAI);
     try {
       let body = {
         partner_code: userProfile.partner_code,
@@ -56,12 +59,12 @@ HLog("RE_RENDER")
       let res = await common_post(apis.ds_ho_so_benh_nhan, body, false);
       if (res && res.status === "OK") {
         let { result } = res;
-        if(result.length === 0){
-          setIsNewPatient(true)
+        if (result.length === 0) {
+          setIsNewPatient(true);
           setVisibleDsHoSo(false);
-        }else{
+        } else {
           setVisibleDsHoSo(true);
-          setDsHoSoBenhNhan(result.map((item) => ({...item,key:rid()})));
+          setDsHoSoBenhNhan(result.map((item) => ({ ...item, key: rid() })));
         }
       }
     } catch (error) {
@@ -70,21 +73,17 @@ HLog("RE_RENDER")
   };
 
   // Hàm lấy thông tin bệnh nhân mỗi với mỗi số
-  const handleSetCurrentClient = (patientInfo) => {
-    setCurrentClient(patientInfo)
-  }
+  const handleSetCurrentClient = useCallback((patientInfo) => {
+    setCurrentClient(patientInfo);
+  }, []);
 
   // Nếu chấp nhận cuộc gọi đến thì gọi api lấy danh sách hồ sơ bệnh nhân
-  useEffect( async () => {
+  useEffect(async () => {
     if (pickup) {
-     await handleLayDsHoSo(phoneNumber)
+      await handleLayDsHoSo(phoneNumber);
     }
-    // if(status === phoneStatus.available){
-    //   setPatientService(null)
-    // }
   }, [pickup]);
-  HLog("nhac may ",pickup)
-//=======================================================================================
+  //=======================================================================================
   const patientOptions = () => {
     switch (patientService) {
       case arrBtn[0].KEY:
@@ -94,16 +93,37 @@ HLog("RE_RENDER")
       case arrBtn[1].KEY:
         return <GhiChu form={form} />;
       case arrBtn[2].KEY:
-        return <DatLichKham form={form} />;
+        return <DatLichKham form={form} patientID={currentClient.ID} />; // đặt lịch khám
       case arrBtn[3].KEY:
-        return <DatLichKham form={form} />; // đặt lịch khám
-      case arrBtn[4].KEY:
         return <Available />; // Cận lâm sàng
+      case arrBtn[4].KEY:
+        return <Available />; // Kê đơn và mua thuốc
 
       default:
         return <Available />; // tiêu đề mặc định
     }
   };
+
+  // hàm lưu thông tin lịch sử cuộc gọi
+  const handleDoAfterCall = async (value) => {
+    HLog("FORM___VALUE:::", value);
+
+    // try {
+    //   let body = {
+    //     partner_code: userProfile.partner_code,
+    //     BENH_NHAN_ID:"",
+    //     GHI_CHU_NGUOI_BENH:"",
+    //     GHI_CHU_TU_VAN:"",
+    //   };
+    //   let res = await common_post(apis.luu_cuoc_goi, body, false);
+    //   if (res && res.status === "OK") {
+    //     // Hành động sau khi lưu cuộc gọi thành công
+    //   }
+    // } catch (error) {
+    //   HLog("Lưu cuộc gọi không thành công:::", error);
+    // }
+  };
+
   return (
     <div className={style["container"]}>
       <Layout className="layout">
@@ -122,13 +142,14 @@ HLog("RE_RENDER")
               isNewPatient={isNewPatient}
               dataSource={dsHoSoBenhNhan}
               onSetCurrClient={handleSetCurrentClient}
+              disableBtn={isNewPatient}
             />
           ) : (
             <></>
           )}
         </div>
         <Content style={{ padding: "2rem" }}>
-          <Form form={form} layout="vertical">
+          <Form form={form} layout="vertical" onFinish={handleDoAfterCall}>
             {patientOptions()}
           </Form>
         </Content>
@@ -144,7 +165,7 @@ HLog("RE_RENDER")
           onVisible={setVisibleDsHoSo}
           onFillInfo={(info) => {
             setCurrentClient(info); // chọn hồ sơ bệnh nhân
-            setPatientService(arrBtn[0].KEY);
+            setPatientService(arrBtn[0].KEY); // chuyển về tab hồ sơ bệnh nhân
           }}
           dataSource={dsHoSoBenhNhan}
         />
