@@ -1,6 +1,6 @@
 export * from "./apis";
 export * from "./paths";
-
+export * from "./keys";
 export const keys = {
   // local storage
   access_token: "access_token",
@@ -19,4 +19,7 @@ export const keys = {
   feature_Lich_Lam_viec: "Lich_Lam_viec",
   feature_Thong_ke: "Thong_ke",
   feature_lich_lam_viec: "quan_ly_lich_lam_viec",
+
+  // constant api
+  limit:15,
 };

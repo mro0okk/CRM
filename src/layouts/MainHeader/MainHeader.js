@@ -39,7 +39,6 @@ export const MainHeader = ({
     i18n.changeLanguage(val);
     window.location.reload();
   };
-  HLog("wSDK", status, phoneNumber, client);
   return (
     <Layout.Header className={style["container"]}>
       <Row align="middle" justify="space-between">

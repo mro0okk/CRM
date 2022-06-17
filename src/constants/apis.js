@@ -24,4 +24,16 @@ export default class apis {
     apiServices.H247_BS_HIS +
       "api/partner/public/benhNhan/layDanhSachBenhNhan"
   ); // lấy cài đặt giờ mặc định
+  static lich_su_kham = getUrlApi(
+    apiServices.H247_BS_HIS +
+      "api/partner/public/crm/lichkham/layLichSuKhamBenh"
+  ); // lấy cài đặt giờ mặc định
+  static ds_ho_so_benh_nhan = getUrlApi(
+    apiServices.H247_BS_HIS +
+      "api/partner/public/crm/benhNhan/layHoSoBenhNhanTheoSDT"
+  ); // lấy danh sách hồ sơ theo số điện thoại
+  static lich_su_cuoc_goi = getUrlApi(
+    apiServices.H247_BS_HIS +
+      "api/partner/public/crm/cuocGoi/layDSLichSuCuocGoi"
+  ); // lấy danh sách LỊch sử cuộc gọi
 }

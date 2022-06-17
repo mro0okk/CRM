@@ -1,79 +1,51 @@
-import { Button, Form } from "antd";
+import { Button, Form, notification } from "antd";
 import Search from "antd/lib/transfer/search";
 import { useRef, useState } from "react";
 import { CallQlbn } from "../../assets/svgs";
 import { DrawerQLBN } from "../../components";
 import Table from "../../components/TableCustom/Table";
 import Topbar from "../../components/Topbar/Topbar";
+import { userProfile } from "../../constants";
+import apis from "../../constants/apis";
+import { common_post, HLog, rid } from "../../helpers";
 import i18n, { languageKeys } from "../../i18n";
 import style from "./qlbn.module.less";
 
 export const QuanLyBenhNhan = () => {
   const onSearch = (e) => {
-    console.log(e);
+
   };
   const submitSearch = () => {
-    // layDsCuocHenSapToi({ search_string: searchString });
   };
   const [searchString, setSearchString] = useState("");
-  const dataSource = [
-    {
-      stt: "1",
-      id: "1030240045677",
-      dob: "22/02/2000",
-      lan_kham_gan_nhat: "26/03/2022",
-      time: "12:21 - 03/03/2022",
-      sdt: "0928 999 2999",
+  const [dataSource, setDataSource] = useState([]);
+  const [visible, setVisible] = useState(false);
+  
+  const handleGetDataSource = async (search_string="",page=1) => {
+    setSearchString(search_string)
+    try {
+      let body = {
+        partner_code:userProfile.partner_code,
+        page,
+        search_string,
+      }
+      let res = await common_post(apis.ds_benh_nhan,body,false)
 
-      loai_cuoc_goi: "Cuộc gọi đến",
-      status: "Cuộc gọi nhỡ",
-      name: "Eleanor Pena",
-    },
-    {
-      stt: "1",
-      id: "1030240045677",
-      dob: "22/02/2000",
-      lan_kham_gan_nhat: "26/03/2022",
-      time: "12:21 - 03/03/2022",
-      sdt: "0928 999 2999",
-      loai_cuoc_goi: "Cuộc gọi đến",
-      status: "Cuộc gọi nhỡ",
-      name: "Eleanor Pena",
-    },
-    {
-      stt: "2",
-      id: "1030240045677",
-      dob: "22/02/2000",
-      lan_kham_gan_nhat: "26/03/2022",
-      time: "12:21 - 03/03/2022",
-      sdt: "0928 999 2999",
-      loai_cuoc_goi: "Cuộc gọi đến",
-      status: "Cuộc gọi nhỡ",
-      name: "Eleanor Pena",
-    },
-    {
-      stt: "3",
-      id: "1030240045677",
-      dob: "22/02/2000",
-      lan_kham_gan_nhat: "26/03/2022",
-      time: "12:21 - 03/03/2022",
-      sdt: "0928 999 2999",
-      loai_cuoc_goi: "Cuộc gọi đến",
-      status: "Cuộc gọi nhỡ",
-      name: "Eleanor Pena",
-    },
-    {
-      stt: "4",
-      id: "1030240045677",
-      dob: "22/02/2000",
-      lan_kham_gan_nhat: "26/03/2022",
-      time: "12:21 - 03/03/2022",
-      sdt: "0928 999 2999",
-      loai_cuoc_goi: "Cuộc gọi đến",
-      status: "Cuộc gọi nhỡ",
-      name: "Eleanor Pena",
-    },
-  ];
+        if(res && res.status ==="OK"){
+          let {result} = res 
+          setDataSource(() => result.map(item => ({...item, key:rid()})))
+        }else{
+          notification.error({
+            message:"Lấy danh sách bệnh nhân thất bại",
+            placement:"bottomLeft",
+          })
+        }
+    } catch (error) {
+      HLog("Lấy danh sách bệnh nhân::",error)
+    }
+
+  }
+
 
   const columns = [
     {
@@ -113,7 +85,6 @@ export const QuanLyBenhNhan = () => {
       key: "lan_kham_gan_nhat",
     },
   ];
-  const [visible, setVisible] = useState(false);
 
   // });
   const onClose = () => {
@@ -136,27 +107,6 @@ export const QuanLyBenhNhan = () => {
 
   return (
     <div className={style["container"]}>
-      {/* <div className={style["topBar"]}>
-        <div className={style["title"]}>
-          {i18n.t(languageKeys.menu_Quan_ly_benh_nhan)}
-        </div>
-        <div className={style["rightSide"]}>
-          <div className={style["BarSearch"]}>
-            <Search
-              placeholder="input search text"
-              allowClear
-              onSearch={onSearch}
-              style={{ width: 200 }}
-            />
-          </div>
-          <div className={style["BarSearch"]}>
-            <Button type="primary" onClick={showLargeDrawer}>
-              Thêm bệnh nhân
-            </Button>
-            
-          </div>
-        </div>
-      </div> */}
       <Topbar
         className={style["topbar"]}
         title={i18n.t(languageKeys.menu_Quan_ly_benh_nhan)}

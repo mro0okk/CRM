@@ -2,7 +2,7 @@ import { Avatar, Button, Modal, Typography } from "antd";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
-import { acceptCall, rejectCall } from "../../../ducks/slices/callSlice";
+import { acceptCall, rejectCall, resetState } from "../../../ducks/slices/callSlice";
 import i18n, { languageKeys } from "../../../i18n";
 import style from "../tncg.module.less";
 import { PhoneAlt, UserFill } from "../../../assets/svgs";
@@ -44,6 +44,8 @@ const CuocGoiDen = forwardRef(({}, ref) => {
 
   const handleCancel = () => {
     dispatch(rejectCall());
+    // window.omiSDK.stopCall();
+    dispatch(resetState());
     setIsModalVisible(false);
   };
 

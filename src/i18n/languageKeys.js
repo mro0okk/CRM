@@ -41,6 +41,10 @@ const languageKeys = {
   phone_tat_may:"phone_tat_may",
   phone_dang_goi:"phone_dang_goi",
   phone_dang_do_chuong:"phone_dang_do_chuong",
+  phone_chua_ket_noi_tong_dai:"phone_chua_ket_noi_tong_dai",
+  phone_goi_nho:"phone_goi_nho",
+  phone_hoan_thanh:"phone_hoan_thanh",
+  phone_khong_tra_loi:"phone_khong_tra_loi",
 
 
   // tiếp nhận cuộc gọi
@@ -57,7 +61,6 @@ const languageKeys = {
   menu_bang_dieu_khien: "menu_bang_dieu_khien",
   menu_quan_ly_nhan_vien: "menu_quan_ly_nhan_vien",
   menu_quan_ly_lich_lam_viec: "menu_quan_ly_lich_lam_viec",
-  menu_thong_ke: "menu_thong_ke",
   calling_center: "calling_center",
   dang_nhap: "dang_nhap",
   dang_nhap_text: "dang_nhap_text",

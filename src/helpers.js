@@ -31,7 +31,7 @@ export function getUrlApi(stringUrl) {
     }
   }
 
-  let urlApi = stringUrl + "?partner_code=" + pathName;
+  let urlApi = stringUrl + "?partner_code=" + "HOSPITAL_ID";
 
   //HLog("Utils getUrlApi urlApi: " + urlApi + " pathName: " + pathName)
   return urlApi;
@@ -731,7 +731,10 @@ export const postBearerToken = async (url, body, useToken = true) => {
 }
 
 export const getPhoneService = async (url, params) => {
-  const bearer_token = localGet(keys.bearer_token)
+  // bearer_token lấy qua api deepcare
+  // const bearer_token = localGet(keys.bearer_token)
+  const bearer_token = localStorage.getItem(keys.bearer_token)
+
   try {
     let headers
     if (bearer_token) {
@@ -739,11 +742,29 @@ export const getPhoneService = async (url, params) => {
     } else {
       headers = { Accept: "application/json", "Content-Type": "application/json" }
     }
+    let result
     const dataResponse = await axios.get(url, { params: { ...params }, headers: headers })
-    const result = dataResponse.data
-    HLog("getPhone Service RESPONSE url", url, "result", result)
+      result = dataResponse.data
+      if(result.status_code === 9999){
+        result = result.payload
+      }
+      HLog("getPhone Service RESPONSE url", url, "result", result)
     return result
   } catch (e) {
     HLog("get Error: ", e)
+  }
+}
+
+//hàm valid định dạng số điện thoại
+export function mobilevalidate(text) {
+  //+33 6 8379686 - +33 7 8379686
+  //+32 4 8379686
+  const reg = /^[0]?[35789]\d{8}$/;
+  if (reg.test(text) === false) {
+    console.log(reg.test(text));
+    return false;
+  } else {
+    console.log(reg.test(text));
+    return true;
   }
 }

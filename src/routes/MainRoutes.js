@@ -82,7 +82,7 @@ export const MainRoutes = () => {
               component={HoSoChuaCoTrongHeThong}
             />
 
-            <Redirect exact from={paths.main} to={paths.thong_ke} />
+            <Redirect exact from={paths.main} to={paths.tiep_nhan_cuoc_goi} />
             {/* <Redirect exact from={paths.main} to={paths.dang_nhap} /> */}
 
             <Route component={NoMatch} />
