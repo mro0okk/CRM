@@ -30,48 +30,7 @@ export const LichLamViec = () => {
   const [loading, setLoading] = useState(false);
   const [currentTimeRange, setCurrentTimeRange] = useState(null);
   const [currentWeek, setCurrentWeek] = useState(null); //thời gian bắt đầu, kết thúc của tuần hiện tại, phục vụ cho nút tuần này
-  const [dataSource, setDataSource] = useState([
-    {
-      KHOA_ID: "K1",
-      TEN_KHOA: "Khoa 1",
-      arr_phong: [
-        {
-          PHONG_ID: "P1",
-          TEN_PHONG: "Phong 1",
-          arr_ngay: [
-            {
-              arr_bac_si: [],
-              NGAY: "20221206",
-            },
-            {
-              arr_bac_si: [],
-              NGAY: "20221207",
-            },
-            {
-              arr_bac_si: [],
-              NGAY: "20221208",
-            },
-            {
-              arr_bac_si: [],
-              NGAY: "20221209",
-            },
-            {
-              arr_bac_si: [],
-              NGAY: "20221210",
-            },
-            {
-              arr_bac_si: [],
-              NGAY: "20221211",
-            },
-            {
-              arr_bac_si: [],
-              NGAY: "20221212",
-            },
-          ],
-        },
-      ],
-    },
-  ]);
+  const [dataSource, setDataSource] = useState([]);
 
   useEffect(() => {
     getDataSource();

@@ -6,19 +6,17 @@ import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CallPicIcon, SideBarIcon } from "../../assets/imgs";
-
-const SIDER_WIDTH = 300;
+import { HLog } from "../../helpers";
 
 export const MainSider = ({ collapsed = false }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const [currentKeys, setCurrentKeys] = useState([]);
-
   useEffect(() => {
     if (currentKeys.length === 0) {
       for (let i = 0; i < siderItems.length; i++) {
         const item = siderItems[i];
-
+        
         if (item.path === pathname) {
           setCurrentKeys([item.key]);
           break;
@@ -59,9 +57,9 @@ export const MainSider = ({ collapsed = false }) => {
   return (
     <Layout.Sider
       theme="light"
-      mode="inline"
-      width={SIDER_WIDTH}
+      width={300}
       collapsed={collapsed}
+      style={{ minHeight: '100vh' }}
       className={style["container"]}
     >
       <div className={style["iconCallWrap"]}>

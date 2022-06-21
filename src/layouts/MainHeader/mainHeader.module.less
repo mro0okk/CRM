@@ -1,7 +1,133 @@
+@import "../../assets/styles/mixins.less";
+
+
 .container {
-  position: sticky;
+  height: @header-height !important;
+  position: sticky !important;
   top: 0;
+  display: flex;
+  align-items: center;
+  // border-bottom: 1px solid #f0f0f0;
+  box-shadow: 0 0 5px #00000025;
+  z-index: 5;
+
+  * {
+    margin-bottom: 0 !important;
+  }
+
+  &.main-header {
+    z-index: 3;
+  }
+
+  .wrapper {
+    min-width: @header-height;
+    height: @header-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 10px;
+    padding-inline: 15px;
+
+    &:hover {
+      background-color: #00000005;
+    }
+
+    &.right {
+      border-right: 1px solid #f0f0f0;
+    }
+
+    &.left {
+      border-left: 1px solid #f0f0f0;
+    }
+
+    &.grow {
+      flex-grow: 1;
+      justify-content: flex-start;
+      cursor: unset;
+
+      &:hover {
+        background-color: unset;
+      }
+    }
+  }
+
+  .icon {
+    * {
+      font-size: 18px;
+    }
+
+    &.color {
+      color: @blue1;
+    }
+  }
+
+  .name {
+    margin-bottom: 0;
+    color: @navy1;
+    margin-left: 10px;
+  }
+
+  .input {
+    height: 36px;
+    border-radius: 50px;
+    max-width: 400px;
+
+    .icon {
+      margin-right: 5px;
+    }
+  }
+
+  .carets {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.menu {
+  box-shadow: 0 0 10px #00000025;
+  border-radius: 5px;
   background-color: #fff;
-  border-bottom: 1px solid #d3d3d3;
-  z-index: 100;
+  padding: 3px 0;
+  min-width: 200px;
+
+  .user {
+    padding: 10px 15px;
+  }
+
+  .menu-item {
+    color: @navy1;
+    padding: 12px 15px;
+    cursor: pointer;
+
+    &:hover,
+    &.active {
+      background-color: @blue1;
+      color: #fff;
+    }
+  }
+
+  .version {
+    padding: 10px 15px;
+    color: @blue1;
+  }
+}
+
+.sub-popup {
+  top: 0;
+  right: calc(100% + 5px) !important;
+}
+
+.export-queue-btn {
+  background-color: #ebedff !important;
+  border: none !important;
+  color: @navy1 !important;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.avatar {
+  object-fit: contain;
 }

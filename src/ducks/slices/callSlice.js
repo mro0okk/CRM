@@ -4,42 +4,68 @@ import { HLog } from "../../helpers";
 const initState = {
   status: phoneStatus.offline,
   phoneNumber: "",
-  client: {},
+  callee:"",
+  client:{},
   reasonCall: "",
   duration:"0:00",
+  isAccepted:false,
+  dataAfterCall:{},
+  pickup:false,
 };
 const callSlice = createSlice({
   name: "call",
   initialState: initState,
   reducers: {
     changeStatus: (state, { payload }) => {
-      HLog("New Status: ", payload);
+      HLog("PAYLOAD_STATUS",payload)
       state.status = payload.status;
       payload?.phone && (state.phoneNumber = payload.phone);
       state.reasonCall = payload?.reason;
+      state.client = payload?.client;
+      state.pickup = payload.pickup;
+
     },
     addPhone: (state, { payload }) => {},
     makeCall: (state, action) => {
-      HLog(action.payload);
-      // window.omiSDK.makeCall(action.payload);
-      state.status = phoneStatus.connecting;
+      window.omiSDK.makeCall(action.payload);
+      state.status = phoneStatus.connecting
+      state.phoneNumber = action.payload
     },
-    acceptCall: (state, action) => {
-      HLog(action.payload);
-      // window.omiSDK.acceptCall();
+    acceptCall: (state, {payload}) => {
+      window.omiSDK.acceptCall();
       state.status = phoneStatus.on_call;
+      state.client = payload
+      state.pickup = true
     },
     onCall: (state, { payload }) => {
-      console.log("on call:::::", payload);
       state.callInfo = { ...state.callInfo, duration: payload };
     },
     durationing: (state, { payload }) => {
-      console.log("duration: ", payload);
-      state.duration = payload
+      state.duration = payload.duration
     },
     rejectCall: (state,action) => {
-      HLog("PHoneStatus::::",phoneStatus.rejected)
+      window.omiSDK.rejectCall()
       state.status = phoneStatus.rejected
+      
+    },
+    endCall:(state,action) => { 
+      HLog("ENDCALL_ACTION",action.payload)
+        state.dataAfterCall = action.payload
+        state.pickup = false
+     },
+    // acceptCall:(status,{payload}) => {
+    //   state.isAccepted = payload
+    // },
+    resetState:(state,action) => {
+      HLog("REDUX_RESET_STATE")
+      state.status = phoneStatus.available
+      state.phoneNumber = ""
+      state.clientName = ""
+      state.reasonCall = ""
+      state.duration = "0:00"
+      state.callee = ""
+      state.dataAfterCall={}
+      state.pickup = false
     }
   },
 });
@@ -49,10 +75,12 @@ export const {
   makeCall,
   rejectCall,
   acceptCall,
-  stopCall,
+  dataAfterCall,
   addPhone,
   onCall,
   durationing,
+  resetState,
+  endCall,
 } = callSlice.actions;
 
 export default callSlice.reducer;

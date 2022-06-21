@@ -377,6 +377,7 @@
 
 .DamThoai {
   width: 100%;
+  min-height: 200px;
   margin: auto;
   padding: 0 2rem;
   .callBlock {
@@ -410,14 +411,15 @@
   background-color: #ff5855 !important;
 }
 
-.info {
-}
+// .info {
+// }
 
-.btnGroup {
+.buttonWrap {
   display: flex;
   flex-direction: row;
   padding-top: 40px;
   gap: 10px;
+  color: @navy1 !important;
   .btn {
     border: none;
 
@@ -452,4 +454,8 @@
     filter: invert(100%) sepia(100%) saturate(100%) hue-rotate(87deg)
       brightness(119%) contrast(119%);
   }
+}
+
+.topbar{
+  background-color: #fff !important;
 }

@@ -35,6 +35,18 @@ const vi = {
   common_tat_tieng:"Tắt tiếng",
   common_ket_thuc:"Kết thúc",
   common_goi_lai:"Gọi lại",
+  phone_nghe_may:"Nghe máy",
+  phone_dang_goi:"Đang gọi",
+  phone_nghe_may:"Nghe máy",
+  phone_tat_may:"Tắt máy",
+  phone_dang_do_chuong:"Đang đổ chuông",
+  txt_cuoc_goi_den:"Cuộc gọi đến",
+  txt_cuoc_goi_da_ket_thuc:"Cuộc gọi đã kết thúc",
+  phone_chua_ket_noi_tong_dai:"Chưa kết nối tới tổng đài",
+  phone_goi_nho:"Gọi nhỡ",
+  phone_hoan_thanh:"Hoàn thành",
+  phone_khong_tra_loi:"Không trả lời",
+
   // tiếp nhận cuộc gọi
   title_tiep_nhan_cuoc_goi:"Tiếp nhận cuộc gọi",
   title_cuoc_goi_den:"Cuộc gọi đến",
@@ -52,7 +64,6 @@ const vi = {
   menu_bang_dieu_khien: "Bảng điều khiển",
   menu_quan_ly_nhan_vien: "Quản lý nhân viên ",
   menu_quan_ly_lich_lam_viec: "Quản lý lịch làm việc",
-  menu_thong_ke: "Thông kê",
 
   cuoc_goi_di: "Cuộc gọi đi",
   //login text
@@ -1057,6 +1068,13 @@ const vi = {
   loai_giuong_thuong: "Giường thường",
   loai_giuong_ghep_2: "Giường ghép 2",
   loai_giuong_ghep_3: "Giường ghép 3",
+
+  // thông tin bệnh nhân
+
+  field_benh_vien_kham:"Bệnh viện khám",
+  field_ho_so_suc_khoe:"Hồ sơ sức khỏe",
+  field_hinh_thuc_de:"Hình thức đẻ",
+  field_can_nang_luc_de:"Cân nặng lúc đẻ",
 };
 
 export default vi;

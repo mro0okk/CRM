@@ -1,11 +1,13 @@
+@import "../../assets/styles/mixins.less";
 .container {
-  height: 100vh;
   position: sticky;
   top: 0;
-  color: navy;
+  color: @navy1;
   .menu{
+    color: @navy1;
     border-right: none;
   }
+  box-shadow: 0px 4px 2px #ccc;
 }
 :global(.ant-menu-item-selected) {
   background-color: #6576ff !important;

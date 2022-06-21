@@ -1,12 +1,13 @@
 import { Avatar, Button, Modal, Typography } from "antd";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
-import { acceptCall, rejectCall } from "../../../ducks/slices/callSlice";
+import { acceptCall, rejectCall, resetState } from "../../../ducks/slices/callSlice";
 import i18n, { languageKeys } from "../../../i18n";
 import style from "../tncg.module.less";
 import { PhoneAlt, UserFill } from "../../../assets/svgs";
-import { formatPhoneNumber } from "../../../helpers";
+import { formatPhoneNumber, HLog } from "../../../helpers";
+import { phoneStatus } from "../../../constants/phoneStatus";
 
 const styleCuocGoi = {
   backgroundColor: "#2c3782",
@@ -17,9 +18,19 @@ const styleCuocGoi = {
 
 const CuocGoiDen = forwardRef(({}, ref) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [currentNumber, setCurrentNumber] = useState("0338305136");
+  const [currentNumber, setCurrentNumber] = useState("");
   const dispatch = useDispatch();
+  
+  const {status,phoneNumber} = useSelector(state => state.call)
 
+  useEffect(() => {
+    if(status === phoneStatus.invite){
+      setIsModalVisible(true)
+    }else{
+      setIsModalVisible(false)
+    }
+  },[status])
+  
   useEffect(() => {
     return () => {
       setCurrentNumber("");
@@ -33,12 +44,19 @@ const CuocGoiDen = forwardRef(({}, ref) => {
 
   const handleCancel = () => {
     dispatch(rejectCall());
+    // window.omiSDK.stopCall();
+    dispatch(resetState());
     setIsModalVisible(false);
   };
 
   useImperativeHandle(ref, () => ({
     open: (phoneNumber) => {
-      setCurrentNumber(phoneNumber.toString());
+      // setCurrentNumber(phoneNumber.toString());
+      setIsModalVisible(true)
+    },
+    close: () => {
+      // setCurrentNumber(phoneNumber.toString());
+      setIsModalVisible(false)
     },
   }));
 
@@ -61,7 +79,7 @@ const CuocGoiDen = forwardRef(({}, ref) => {
                         size="large"
                         icon={<UserFill style={{marginTop:4}} />}
                     />
-                    <span className={style['line_call--sdt']}>{formatPhoneNumber(currentNumber)}</span>
+                    <span className={style['line_call--sdt']}>{formatPhoneNumber(phoneNumber)}</span>
                 </div>
                 <div className={cn(style.lineCall)}>
                 <Button

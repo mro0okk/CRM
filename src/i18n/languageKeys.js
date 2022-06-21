@@ -37,6 +37,16 @@ const languageKeys = {
   txt_cuoc_goi_den:"txt_cuoc_goi_den",
   txt_cuoc_goi_da_ket_thuc:"txt_cuoc_goi_da_ket_thuc",
   common_goi_lai:"common_goi_lai",
+  phone_nghe_may:"phone_nghe_may",
+  phone_tat_may:"phone_tat_may",
+  phone_dang_goi:"phone_dang_goi",
+  phone_dang_do_chuong:"phone_dang_do_chuong",
+  phone_chua_ket_noi_tong_dai:"phone_chua_ket_noi_tong_dai",
+  phone_goi_nho:"phone_goi_nho",
+  phone_hoan_thanh:"phone_hoan_thanh",
+  phone_khong_tra_loi:"phone_khong_tra_loi",
+
+
   // tiếp nhận cuộc gọi
   field_gioi_tinh:"field_gioi_tinh",
   field_ngay_sinh:"field_ngay_sinh",
@@ -51,7 +61,6 @@ const languageKeys = {
   menu_bang_dieu_khien: "menu_bang_dieu_khien",
   menu_quan_ly_nhan_vien: "menu_quan_ly_nhan_vien",
   menu_quan_ly_lich_lam_viec: "menu_quan_ly_lich_lam_viec",
-  menu_thong_ke: "menu_thong_ke",
   calling_center: "calling_center",
   dang_nhap: "dang_nhap",
   dang_nhap_text: "dang_nhap_text",
@@ -1045,6 +1054,15 @@ const languageKeys = {
   loai_giuong_thuong: "loai_giuong_thuong",
   loai_giuong_ghep_2: "loai_giuong_ghep_2",
   loai_giuong_ghep_3: "loai_giuong_ghep_3",
+
+  // thông tin bệnh nhân
+
+  field_benh_vien_kham:"field_benh_vien_kham",
+  txt_ho_so_suc_khoe:"field_ho_so_suc_khoe",
+  txt_hinh_thuc_de:"field_hinh_thuc_de",
+  txt_can_nang_luc_de:"field_can_nang_luc_de",
+  txt_chieu_dai_luc_de:"field_chieu_dai_luc_de",
+  txt_van_de_khac:"txt_van_de_khac",
 };
 
 export default languageKeys;

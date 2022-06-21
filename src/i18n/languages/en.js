@@ -31,7 +31,11 @@ const en = {
   common_tat_tieng:"Mute",
   common_ket_thuc:"End call",
   common_goi_lai:"Callback",
-
+  phone_nghe_may:"Answer call",
+  phone_tat_may:"Hangout",
+  txt_cuoc_goi_den:"Incomming call",
+  txt_cuoc_goi_da_ket_thuc:"Call ended",
+  phone_chua_ket_noi_tong_dai:"cannot connect to call center",
   // tiếp nhận cuộc gọi
 
   title_tiep_nhan_cuoc_goi:"receive calls",
@@ -43,7 +47,6 @@ const en = {
   menu_bang_dieu_khien: "Control system",
   menu_quan_ly_nhan_vien: "Staff management ",
   menu_quan_ly_lich_lam_viec: "Work schedule",
-  menu_thong_ke: "Statistic",
 
   cuoc_goi_di: "Calling",
 
@@ -1050,6 +1053,9 @@ const en = {
   loai_giuong_thuong: "Normal bed",
   loai_giuong_ghep_2: "Compound bed 2",
   loai_giuong_ghep_3: "Compound bed 3",
+  field_ho_so_suc_khoe:"Health record",
+  field_hinh_thuc_de:"Birth form",
+  field_can_nang_luc_de:"Birth weight",
 };
 
 export default en;
