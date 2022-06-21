@@ -1,9 +1,9 @@
 import { Button, Col, Row, Table as TableAntd } from "antd";
 import table from "./table.module.less";
 import cn from "classnames";
-import { HLog } from "../../helpers";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import i18n, { languageKeys } from "../../i18n";
+import { HLog } from "../../helpers";
 
 const Table = ({
   columns = [], // Danh sách cột
